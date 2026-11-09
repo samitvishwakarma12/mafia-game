@@ -1,0 +1,501 @@
+
+.game-page {
+  min-height: 100vh;
+  padding-bottom: 60px;
+  background:
+    radial-gradient(ellipse at 50% 0%, #332345 0%, transparent 55%),
+    #151321;
+}
+
+.game-navbar {
+  height: 76px;
+  padding: 0 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ffffff12;
+}
+
+.game-navbar .brand {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.game-navbar .brand-icon {
+  width: 34px;
+  height: 34px;
+}
+
+.game-round {
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #f7bc55;
+}
+
+.game-status {
+  display: flex;
+  justify-content: space-between;
+  width: min(650px, 90%);
+  margin: 18px auto 0;
+  color: #888297;
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1px;
+}
+
+.game-container {
+  width: min(650px, 90%);
+  margin: 45px auto 0;
+}
+
+.game-stage {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.game-heading {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.game-eyebrow {
+  color: #f7bc55;
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 1.8px;
+}
+
+.game-heading h1,
+.handoff-card h1,
+.action-card > h1,
+.result-card h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(29px, 5vw, 40px);
+  letter-spacing: -1px;
+  margin: 14px 0;
+}
+
+.game-heading p,
+.handoff-card > p,
+.result-card > p {
+  color: #aaa5ba;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+.registration-card,
+.handoff-card,
+.action-card,
+.result-card {
+  width: 100%;
+  padding: 28px;
+  border-radius: 16px;
+  background: #ffffff09;
+  border: 1px solid #ffffff17;
+}
+
+.registration-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.name-field {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  padding: 12px 15px;
+  border-radius: 9px;
+  background: #ffffff08;
+  border: 1px solid #ffffff12;
+}
+
+.name-field > span {
+  font-size: 10px;
+  font-weight: 800;
+  color: #f7bc55;
+}
+
+.name-field input {
+  flex: 1;
+  min-width: 0;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #f8f5ff;
+  font-size: 13px;
+}
+
+.name-field input:focus {
+  color: #f7bc55;
+}
+
+.game-primary {
+  width: 100%;
+  margin-top: 22px;
+  padding: 16px;
+  border: none;
+  border-radius: 9px;
+  background: #f7bc55;
+  color: #24192e;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.game-primary:hover {
+  background: #ffd17b;
+  transform: translateY(-2px);
+}
+
+.game-back {
+  display: block;
+  margin: 18px auto 0;
+  border: none;
+  background: transparent;
+  color: #aaa5ba;
+  cursor: pointer;
+  font-size: 11px;
+}
+
+.game-back:hover {
+  color: #f7bc55;
+}
+
+.handoff-card,
+.result-card {
+  text-align: center;
+  max-width: 520px;
+  margin: 0 auto;
+  padding: 42px 32px;
+}
+
+.handoff-icon {
+  font-size: 43px;
+  margin-bottom: 22px;
+}
+
+.handoff-player {
+  display: inline-block;
+  padding: 12px 25px;
+  border-radius: 10px;
+  background: #f7bc5518;
+  color: #f7bc55;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 24px;
+  font-weight: 700;
+  margin: 10px 0;
+}
+
+.handoff-card > p {
+  max-width: 330px;
+  margin: 12px auto 0;
+}
+
+.turn-counter {
+  margin-top: 23px;
+  color: #777286;
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  font-weight: 800;
+}
+
+.action-card {
+  max-width: 520px;
+  margin: 0 auto;
+}
+
+.role-display {
+  text-align: center;
+  padding: 27px 15px;
+  margin: 22px 0;
+  border-radius: 12px;
+  background: #ffffff08;
+  border: 1px solid #ffffff12;
+}
+
+.role-display.mafia {
+  background: #e05a6615;
+  border-color: #e05a6640;
+}
+
+.role-display.town {
+  background: #638eea12;
+  border-color: #638eea35;
+}
+
+.role-display-icon {
+  font-size: 45px;
+}
+
+.role-display h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 29px;
+  margin: 8px 0;
+}
+
+.role-display.mafia h1 { color: #f27883; }
+.role-display.town h1 { color: #9db5ff; }
+
+.role-display > span {
+  font-size: 9px;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  color: #aaa5ba;
+}
+
+.role-display p {
+  max-width: 320px;
+  margin: 13px auto 0;
+  color: #aaa5ba;
+  font-size: 12px;
+  line-height: 1.7;
+}
+
+.teammates {
+  padding: 13px;
+  margin-bottom: 20px;
+  background: #e05a6615;
+  border-radius: 9px;
+  border: 1px solid #e05a6630;
+}
+
+.teammates strong {
+  font-size: 11px;
+  color: #f27883;
+}
+
+.teammates p {
+  font-size: 12px;
+  color: #ddd5e5;
+  margin-bottom: 0;
+}
+
+.action-instruction {
+  margin: 25px 0 16px;
+}
+
+.action-instruction h2,
+.no-action h2 {
+  font-size: 16px;
+  margin-bottom: 6px;
+}
+
+.action-instruction p,
+.no-action p {
+  color: #aaa5ba;
+  font-size: 12px;
+  line-height: 1.6;
+}
+
+.target-list {
+  display: flex;
+  flex-direction: column;
+  gap: 9px;
+  margin-top: 15px;
+}
+
+.target-option {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 15px;
+  border: 1px solid #ffffff18;
+  border-radius: 9px;
+  background: #ffffff08;
+  color: #f8f5ff;
+  cursor: pointer;
+  font-size: 12px;
+  text-align: left;
+  transition: 0.15s;
+}
+
+.target-option:hover {
+  border-color: #f7bc5580;
+}
+
+.target-option.selected {
+  border-color: #f7bc55;
+  background: #f7bc5515;
+  color: #f7bc55;
+}
+
+.target-option.abstain {
+  color: #aaa5ba;
+}
+
+.no-action {
+  text-align: center;
+  margin: 30px 0;
+  padding: 20px;
+  border-radius: 10px;
+  background: #ffffff08;
+}
+
+.game-error {
+  text-align: center;
+  color: #ff858b;
+  font-size: 12px;
+  margin-top: 16px;
+}
+
+.private-result {
+  border-color: #638eea55;
+}
+
+.investigation-target {
+  margin: 25px 0 12px;
+  font-size: 22px;
+  font-weight: 700;
+}
+
+.investigation-answer {
+  display: inline-block;
+  padding: 12px 28px;
+  border-radius: 8px;
+  font-size: 14px;
+  font-weight: 900;
+  letter-spacing: 1.5px;
+}
+
+.investigation-answer.danger {
+  color: #ff858b;
+  background: #e05a6620;
+}
+
+.investigation-answer.safe {
+  color: #70df9d;
+  background: #70df9d20;
+}
+
+.result-card > p {
+  max-width: 350px;
+  margin: 20px auto;
+}
+
+.elimination-list {
+  margin: 25px 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.elimination-item {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  gap: 15px;
+  padding: 17px;
+  background: #e05a6612;
+  border: 1px solid #e05a6630;
+  border-radius: 10px;
+}
+
+.elimination-icon {
+  font-size: 25px;
+}
+
+.elimination-item strong {
+  font-size: 13px;
+}
+
+.elimination-item p {
+  color: #aaa5ba;
+  font-size: 11px;
+  margin: 5px 0 0;
+}
+
+.no-elimination {
+  padding: 25px 10px;
+  margin: 25px 0;
+  background: #70df9d10;
+  border-radius: 10px;
+}
+
+.no-elimination > span {
+  font-size: 32px;
+}
+
+.no-elimination h2 {
+  font-size: 16px;
+}
+
+.no-elimination p {
+  font-size: 11px;
+  color: #aaa5ba;
+}
+
+.voting-description {
+  font-size: 12px;
+  color: #aaa5ba;
+  line-height: 1.7;
+}
+
+.winner-icon {
+  font-size: 65px;
+  margin: 20px;
+}
+
+.game-over h1 {
+  color: #f7bc55;
+}
+
+.final-players {
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+}
+
+.final-player {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  align-items: center;
+  gap: 10px;
+  padding: 13px;
+  background: #ffffff08;
+  border-radius: 8px;
+  font-size: 11px;
+}
+
+.final-player strong {
+  color: #f7bc55;
+}
+
+.final-player small {
+  font-size: 8px;
+  color: #70df9d;
+  letter-spacing: 0.5px;
+}
+
+.final-player.dead {
+  opacity: 0.5;
+}
+
+.final-player.dead small {
+  color: #ff858b;
+}
+
+@media (max-width: 500px) {
+  .game-navbar { padding: 0 5%; }
+  .game-container { margin-top: 30px; }
+  .registration-card,
+  .action-card,
+  .result-card,
+  .handoff-card { padding: 22px 17px; }
+
+  .final-player {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .final-player small {
+    grid-column: 1 / -1;
+  }
+}

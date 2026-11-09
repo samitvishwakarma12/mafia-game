@@ -1,0 +1,182 @@
+
+.reveal-page {
+  min-height: 100vh;
+  padding: 40px 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(145deg, #171329, #242044);
+  color: white;
+}
+
+.reveal-container {
+  width: 100%;
+  max-width: 520px;
+}
+
+.reveal-progress {
+  display: flex;
+  justify-content: space-between;
+  color: #aaa3d0;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+}
+
+.reveal-progress-track {
+  height: 6px;
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 20px;
+  overflow: hidden;
+}
+
+.reveal-progress-fill {
+  height: 100%;
+  background: #9687ff;
+  border-radius: inherit;
+  transition: width 0.3s ease;
+}
+
+.reveal-handoff,
+.reveal-role-card {
+  margin-top: 35px;
+  padding: 35px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.055);
+  text-align: center;
+}
+
+.reveal-lock {
+  font-size: 2.8rem;
+  margin-bottom: 20px;
+}
+
+.reveal-eyebrow {
+  color: #a99cf5;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.reveal-handoff h1,
+.reveal-role-card h1 {
+  font-size: 2.2rem;
+  margin: 12px 0;
+}
+
+.reveal-handoff p,
+.reveal-role-card > p {
+  color: #b9b5cc;
+  line-height: 1.6;
+  margin: 0 auto 25px;
+}
+
+.reveal-primary {
+  width: 100%;
+  padding: 15px;
+  border: none;
+  border-radius: 12px;
+  background: #8b7cf6;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 15px;
+  transition: background 0.2s;
+}
+
+.reveal-primary:hover {
+  background: #7665ed;
+}
+
+.reveal-role-icon {
+  width: 90px;
+  height: 90px;
+  display: grid;
+  place-items: center;
+  margin: 22px auto 15px;
+  border-radius: 24px;
+  font-size: 2.8rem;
+}
+
+.reveal-role-icon.mafia {
+  background: rgba(239, 68, 68, 0.16);
+}
+
+.reveal-role-icon.town {
+  background: rgba(99, 102, 241, 0.16);
+}
+
+.reveal-team {
+  display: inline-block;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  padding: 6px 12px;
+  border-radius: 20px;
+}
+
+.reveal-team.mafia {
+  color: #fca5a5;
+  background: rgba(239, 68, 68, 0.15);
+}
+
+.reveal-team.town {
+  color: #c4b5fd;
+  background: rgba(99, 102, 241, 0.15);
+}
+
+.reveal-ability,
+.reveal-teammates {
+  text-align: left;
+  padding: 16px;
+  margin-top: 18px;
+  background: rgba(255, 255, 255, 0.055);
+  border-radius: 12px;
+}
+
+.reveal-ability span,
+.reveal-teammates span {
+  display: block;
+  color: #a99cf5;
+  font-size: 0.68rem;
+  font-weight: 800;
+  letter-spacing: 1px;
+  margin-bottom: 8px;
+}
+
+.reveal-ability strong {
+  display: block;
+  margin-bottom: 5px;
+}
+
+.reveal-ability p,
+.reveal-teammates p {
+  color: #b9b5cc;
+  font-size: 0.88rem;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.reveal-back {
+  display: block;
+  margin: 22px auto 0;
+  background: none;
+  border: none;
+  color: #aaa3d0;
+  font: inherit;
+  cursor: pointer;
+}
+
+@media (max-width: 500px) {
+  .reveal-page {
+    padding: 25px 16px;
+  }
+
+  .reveal-handoff,
+  .reveal-role-card {
+    padding: 28px 20px;
+  }
+}

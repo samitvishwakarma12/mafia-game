@@ -1,0 +1,231 @@
+
+.home {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background:
+    radial-gradient(ellipse at 50% 45%, #332345 0%, transparent 55%),
+    #151321;
+}
+
+.navbar {
+  height: 82px;
+  padding: 0 8%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid #ffffff12;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 23px;
+  font-weight: 700;
+  letter-spacing: 2px;
+}
+
+.brand-icon {
+  background: #f7bc55;
+  color: #24192e;
+  border-radius: 10px;
+  width: 36px;
+  height: 36px;
+  display: grid;
+  place-items: center;
+}
+
+.brand-accent {
+  color: #f7bc55;
+}
+
+.nav-tag {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1.5px;
+  color: #aaa5ba;
+  display: flex;
+  align-items: center;
+  gap: 9px;
+}
+
+.online-dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #70df9d;
+}
+
+.hero {
+  flex: 1;
+  width: min(1100px, 90%);
+  margin: auto;
+  padding: 65px 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 55px;
+}
+
+.hero-content {
+  max-width: 600px;
+}
+
+.eyebrow {
+  color: #f7bc55;
+  font-size: 11px;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.hero h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(38px, 5.3vw, 68px);
+  line-height: 1.08;
+  letter-spacing: -3px;
+  margin: 25px 0;
+}
+
+.hero h1 span {
+  color: #f7bc55;
+}
+
+.hero-description {
+  color: #aaa5ba;
+  max-width: 430px;
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 32px;
+}
+
+.start-button {
+  background: #f7bc55;
+  color: #24192e;
+  border: none;
+  border-radius: 9px;
+  padding: 17px 29px;
+  font-weight: 800;
+  font-size: 13px;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: 0.2s ease;
+  box-shadow: 0 6px 25px #f7bc5525;
+}
+
+.start-button span {
+  margin-left: 25px;
+  font-size: 18px;
+}
+
+.start-button:hover {
+  transform: translateY(-3px);
+  background: #ffd17b;
+}
+
+.start-caption {
+  color: #777286;
+  font-size: 9px;
+  letter-spacing: 1.7px;
+  margin-top: 17px;
+}
+
+.game-preview {
+  width: 370px;
+  min-width: 300px;
+  padding: 19px;
+  border: 1px solid #ffffff1b;
+  border-radius: 17px;
+  background: #ffffff09;
+  box-shadow: 0 25px 70px #00000035;
+  transform: rotate(2deg);
+}
+
+.preview-top,
+.preview-bottom {
+  display: flex;
+  justify-content: space-between;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #aaa5ba;
+}
+
+.preview-dots {
+  color: #f7bc55;
+  letter-spacing: 3px;
+}
+
+.preview-cards {
+  display: flex;
+  gap: 9px;
+  margin: 23px 0;
+}
+
+.role-card {
+  flex: 1;
+  aspect-ratio: 0.76;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  border: 1px solid #ffffff20;
+}
+
+.citizen { background: #e4ae4930; }
+.mafia { background: #e05a6630; }
+.detective { background: #638eea30; }
+
+.role-symbol { font-size: 36px; }
+.role-name { font-size: 10px; font-weight: 800; letter-spacing: 1px; }
+.role-sub { font-size: 7px; color: #c0bbcc; }
+
+.preview-bottom {
+  padding-top: 13px;
+  border-top: 1px solid #ffffff15;
+  font-size: 8px;
+}
+
+.footer {
+  padding: 23px 8%;
+  display: flex;
+  justify-content: space-between;
+  border-top: 1px solid #ffffff12;
+  color: #777286;
+  font-size: 9px;
+  letter-spacing: 1.3px;
+  font-weight: 700;
+}
+
+.footer-heart { color: #ef7181; }
+
+@media (max-width: 760px) {
+  .hero {
+    flex-direction: column;
+    text-align: center;
+    padding: 65px 0;
+    gap: 45px;
+  }
+
+  .hero-description {
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .game-preview {
+    width: min(370px, 100%);
+    min-width: 0;
+  }
+
+  .hero h1 { letter-spacing: -2px; }
+}
+
+@media (max-width: 450px) {
+  .navbar { padding: 0 5%; }
+  .nav-tag { font-size: 8px; }
+  .footer { padding: 20px 5%; font-size: 8px; }
+}

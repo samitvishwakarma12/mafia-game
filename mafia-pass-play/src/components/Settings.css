@@ -1,0 +1,303 @@
+
+.settings-page {
+  min-height: 100vh;
+  padding: 40px 20px 60px;
+  background: linear-gradient(145deg, #171329, #242044);
+  color: white;
+}
+
+.settings-container {
+  max-width: 700px;
+  margin: 0 auto;
+}
+
+.settings-back {
+  background: none;
+  border: none;
+  color: #b8b3d5;
+  font: inherit;
+  cursor: pointer;
+  margin-bottom: 38px;
+}
+
+.settings-heading {
+  margin-bottom: 35px;
+}
+
+.settings-eyebrow {
+  color: #a99cf5;
+  font-size: 0.75rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+}
+
+.settings-heading h1 {
+  font-size: clamp(2rem, 6vw, 3rem);
+  margin: 12px 0;
+}
+
+.settings-heading p,
+.settings-section > p {
+  color: #b9b5cc;
+  line-height: 1.6;
+}
+
+.settings-section {
+  margin-bottom: 30px;
+  padding: 22px;
+  background: rgba(255, 255, 255, 0.055);
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 16px;
+}
+
+.settings-section h3 {
+  margin: 0 0 8px;
+  font-size: 1.05rem;
+}
+
+.settings-section > p {
+  margin: 0 0 18px;
+  font-size: 0.9rem;
+}
+
+/* Player count */
+
+.settings-section input[type="number"] {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  font: inherit;
+}
+
+.settings-section input:focus {
+  outline: 2px solid #8b7cf6;
+  outline-offset: 2px;
+}
+
+/* Player identity */
+
+.identity-options {
+  display: flex;
+  gap: 10px;
+  margin: 16px 0;
+}
+
+.identity-option {
+  flex: 1;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 10px;
+  background: transparent;
+  color: #d8d4e8;
+  font: inherit;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.identity-option:hover {
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.identity-option.active {
+  border-color: #8b7cf6;
+  background: rgba(139, 124, 246, 0.15);
+  color: white;
+}
+
+/* Collapsible player names */
+
+.player-names-section {
+  margin-top: 18px;
+}
+
+.names-toggle {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.07);
+  color: white;
+  font: inherit;
+  cursor: pointer;
+}
+
+.names-toggle span:last-child {
+  color: #a99cf5;
+  font-size: 0.82rem;
+}
+
+.player-name-fields {
+  display: grid;
+  gap: 12px;
+  margin-top: 14px;
+}
+
+.player-name-field {
+  display: grid;
+  gap: 6px;
+  color: #c9c4db;
+  font-size: 0.85rem;
+}
+
+.player-name-field input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 12px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 9px;
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  font: inherit;
+}
+
+.player-name-field input::placeholder {
+  color: #85809c;
+}
+
+/* Role assignment */
+
+.assignment-options {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.assignment-option {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 12px;
+  background: transparent;
+  color: white;
+  text-align: left;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.assignment-option strong {
+  font-size: 0.95rem;
+}
+
+.assignment-option span {
+  color: #aaa5bf;
+  font-size: 0.82rem;
+  line-height: 1.4;
+}
+
+.assignment-option:hover {
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.assignment-option.active {
+  border-color: #8b7cf6;
+  background: rgba(139, 124, 246, 0.13);
+}
+
+/* Manual role limits */
+
+.role-limits {
+  margin-top: 22px;
+  padding-top: 18px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.role-limits > p {
+  color: #aaa5bf;
+  font-size: 0.85rem;
+  margin-bottom: 18px;
+}
+
+.role-limit-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.role-limit-row > strong {
+  font-size: 0.9rem;
+}
+
+.role-limit-row label {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: #aaa5bf;
+  font-size: 0.78rem;
+}
+
+.role-limit-row input {
+  width: 100%;
+  box-sizing: border-box;
+  padding: 9px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.06);
+  color: white;
+  font: inherit;
+}
+
+/* Error message */
+
+.settings-error {
+  padding: 13px 16px;
+  margin-bottom: 18px;
+  border: 1px solid rgba(248, 113, 113, 0.3);
+  border-radius: 10px;
+  background: rgba(239, 68, 68, 0.1);
+  color: #fca5a5;
+  font-size: 0.88rem;
+  line-height: 1.5;
+}
+
+/* Continue button */
+
+.settings-continue {
+  width: 100%;
+  padding: 16px;
+  border: none;
+  border-radius: 12px;
+  background: #8b7cf6;
+  color: white;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.2s;
+}
+
+.settings-continue:hover {
+  background: #7665ed;
+  transform: translateY(-2px);
+}
+
+/* Responsive layout */
+
+@media (max-width: 500px) {
+  .settings-page {
+    padding: 25px 16px 40px;
+  }
+
+  .settings-section {
+    padding: 17px;
+  }
+
+  .assignment-options {
+    grid-template-columns: 1fr;
+  }
+
+  .role-limit-row {
+    gap: 8px;
+  }
+}
