@@ -152,7 +152,7 @@ export function useGameController(initialPlayers) {
     setActions(prev => {
       const updated = [...prev, action];
 
-      // Show investigation result privately to the detective
+      // Show investigation result privately to the police
       if (action.type === "investigate" && action.targetId) {
         const target = players.find(
           player => player.id === action.targetId
@@ -183,7 +183,7 @@ export function useGameController(initialPlayers) {
     setError("");
   };
 
-  // Close the detective's private result and continue the night
+  // Close the police's private result and continue the night
   const finishPrivateResult = () => {
     setPrivateResults([]);
     setPrivateIndex(0);

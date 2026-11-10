@@ -61,9 +61,9 @@ function Home({ onStart }) {
               <span className="role-sub">THE ENEMY</span>
             </div>
 
-            <div className="role-card detective">
+            <div className="role-card police">
               <span className="role-symbol">⌕</span>
-              <span className="role-name">DETECTIVE</span>
+              <span className="role-name">POLICE</span>
               <span className="role-sub">THE SEEKER</span>
             </div>
           </div>

@@ -5,7 +5,7 @@ import "./Settings.css";
 const ROLE_CONFIG = [
   { id: "mafia", name: "Mafia", min: 1 },
   { id: "doctor", name: "Doctor", min: 0 },
-  { id: "detective", name: "Detective", min: 0 },
+  { id: "police", name: "police", min: 0 },
   { id: "villager", name: "Villager", min: 0 }
 ];
 
@@ -23,7 +23,7 @@ function Settings({ onBack, onContinue }) {
   const [roles, setRoles] = useState(() => ({
     mafia: { min: 1, max: 2 },
     doctor: { min: 0, max: 1 },
-    detective: { min: 0, max: 1 },
+    police: { min: 0, max: 1 },
     villager: { min: 0, max: 4 }
   }));
 

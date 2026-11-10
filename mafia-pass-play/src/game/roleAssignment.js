@@ -18,7 +18,7 @@ function getAutomaticRoles(playerCount) {
   const roleList = [
     ...Array(mafiaCount).fill("mafia"),
     "doctor",
-    "detective"
+    "police"
   ];
 
   const villagerCount = playerCount - roleList.length;

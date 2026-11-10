@@ -30,9 +30,9 @@ export const ROLES = {
     allowSelf: true
   },
 
-  detective: {
-    id: "detective",
-    name: "Detective",
+  police: {
+    id: "police",
+    name: "Police",
     icon: "⌕",
     team: "town",
     description: "Investigate someone to discover their allegiance.",

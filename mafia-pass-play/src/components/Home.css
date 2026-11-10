@@ -183,7 +183,7 @@
 
 .citizen { background: rgba(99, 102, 241, 0.15); }
 .mafia { background: rgba(239, 68, 68, 0.15); }
-.detective { background: rgba(247, 188, 85, 0.15); }
+.police { background: rgba(247, 188, 85, 0.15); }
 
 .role-symbol { font-size: 1.8rem; }
 .role-name { font-size: 0.65rem; font-weight: 800; letter-spacing: 1px; }

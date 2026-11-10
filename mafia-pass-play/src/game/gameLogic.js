@@ -79,7 +79,7 @@ export function resolveNight(players, actions) {
       return false;
     }
 
-    // Allow abstentions for mafia, doctor, and detective
+    // Allow abstentions for mafia, doctor, and police
     if (!action.targetId) {
       if (
         action.type !== "mafiaVote" &&
