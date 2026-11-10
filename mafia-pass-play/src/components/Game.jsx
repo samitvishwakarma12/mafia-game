@@ -1,275 +1,19 @@
-import { useState, useEffect } from "react";
 import "./Game.css";
+import { useGameController } from "./hooks/useGameController";
 
-import { getRole } from "../game/roles";
-
-import {
-  getAlivePlayers,
-  getEligibleTargets,
-  resolveNight,
-  resolveVoting,
-  getWinner
-} from "../game/gameLogic";
+import GameHeader from "./components/GameHeader";
+import ActionHandoff from "./components/ActionHandoff";
+import NightAction from "./components/NightAction";
+import PrivateResult from "./components/PrivateResult";
+import NightSummary from "./components/NightSummary";
+import Discussion from "./components/Discussion";
+import VoteHandoff from "./components/VoteHandoff";
+import Voting from "./components/Voting";
+import VoteSummary from "./components/VoteSummary";
+import GameOver from "./components/GameOver";
 
 function Game({ settings, initialPlayers, onBack }) {
-  const [phase, setPhase] = useState("action-handoff");
-
-  const [players, setPlayers] = useState(initialPlayers ?? []);
-  const [round, setRound] = useState(1);
-
-  // Night actions
-  const [turnIndex, setTurnIndex] = useState(0);
-  const [actions, setActions] = useState([]);
-  const [selectedTarget, setSelectedTarget] = useState("");
-  const [actionAbstained, setActionAbstained] = useState(false);
-
-  // Night results & Private Investigation
-  const [nightResult, setNightResult] = useState(null);
-  const [privateResults, setPrivateResults] = useState([]);
-  const [privateIndex, setPrivateIndex] = useState(0);
-
-  // Discussion Timer State (90 seconds = 1:30)
-  const [timeLeft, setTimeLeft] = useState(90);
-  const [timerActive, setTimerActive] = useState(false);
-
-  // Voting
-  const [voteIndex, setVoteIndex] = useState(0);
-  const [votes, setVotes] = useState([]);
-  const [voteResult, setVoteResult] = useState(null);
-
-  // Game result
-  const [winner, setWinner] = useState(null);
-  const [error, setError] = useState("");
-
-  const alivePlayers = getAlivePlayers(players);
-
-  const safeTurnIndex = Math.min(turnIndex, Math.max(0, alivePlayers.length - 1));
-  const currentActionPlayer = alivePlayers[safeTurnIndex];
-
-  const currentRole = currentActionPlayer
-    ? getRole(currentActionPlayer.roleId)
-    : null;
-
-  const safeVoteIndex = Math.min(voteIndex, Math.max(0, alivePlayers.length - 1));
-  const currentVoter = alivePlayers[safeVoteIndex];
-
-  const currentPrivateResult = privateResults[privateIndex];
-
-  const eligibleTargets = currentActionPlayer
-    ? getEligibleTargets(currentActionPlayer, players)
-    : [];
-
-  useEffect(() => {
-    let interval = null;
-    if (phase === "discussion" && timerActive && timeLeft > 0) {
-      interval = setInterval(() => {
-        setTimeLeft((prev) => prev - 1);
-      }, 1000);
-    } else if (timeLeft === 0) {
-      setTimerActive(false);
-    }
-    return () => clearInterval(interval);
-  }, [phase, timerActive, timeLeft]);
-
-  const checkWinner = (updatedPlayers) => {
-    const result = getWinner(updatedPlayers);
-
-    if (result) {
-      setWinner(result);
-      setPhase("game-over");
-      return true;
-    }
-
-    return false;
-  };
-
-  const revealAction = () => {
-    setSelectedTarget("");
-    setActionAbstained(false);
-    setError("");
-    setPhase("action");
-  };
-
-  const submitAction = () => {
-    if (!currentActionPlayer || !currentRole) return;
-
-    const actionType = currentRole.action?.type ?? "none";
-    const canAbstain = actionType === "mafiaVote" || actionType === "protect" || actionType === "investigate";
-
-    if (
-      currentRole.action &&
-      !selectedTarget &&
-      (!canAbstain || !actionAbstained)
-    ) {
-      setError("⚠️ Pick someone to  kill or choose the abstain (no kill) option below.");
-      return;
-    }
-
-    if (
-      selectedTarget &&
-      !eligibleTargets.some(target => target.id === selectedTarget)
-    ) {
-      setError("🚫 That player is no longer a valid target.");
-      return;
-    }
-
-    const action = {
-      playerId: currentActionPlayer.id,
-      type: actionType,
-      targetId: selectedTarget || null
-    };
-
-    setActions(prev => {
-      const updated = [...prev, action];
-
-      if (action.type === "investigate" && action.targetId) {
-        const target = players.find(p => p.id === action.targetId);
-        if (target) {
-          setPrivateResults([{
-            playerId: currentActionPlayer.id,
-            targetName: target.name,
-            isMafia: target.roleId === "mafia"
-          }]);
-          setPrivateIndex(0);
-          setPhase("private-result");
-        }
-      } else {
-        if (safeTurnIndex + 1 < alivePlayers.length) {
-          setTurnIndex(safeTurnIndex + 1);
-          setPhase("action-handoff");
-        } else {
-          finishNight(updated);
-        }
-      }
-
-      return updated;
-    });
-
-    setError("");
-  };
-
-  const finishNight = (submittedActions) => {
-    const result = resolveNight(players, submittedActions);
-
-    setPlayers(result.players);
-    setNightResult(result);
-    setPrivateResults([]);
-    setPrivateIndex(0);
-
-    setPhase("night-summary");
-  };
-
-  const finishPrivateResult = () => {
-    setPrivateResults([]);
-    setPrivateIndex(0);
-
-    if (safeTurnIndex + 1 < alivePlayers.length) {
-      setTurnIndex(safeTurnIndex + 1);
-      setPhase("action-handoff");
-    } else {
-      finishNight(actions);
-    }
-  };
-
-  const startDiscussionPhase = () => {
-    if (checkWinner(players)) return;
-    setTimeLeft(90);
-    setTimerActive(true);
-    setPhase("discussion");
-  };
-
-  const beginVoting = () => {
-    setTimerActive(false);
-    setVoteIndex(0);
-    setVotes([]);
-    setSelectedTarget("");
-    setError("");
-    setPhase("vote-handoff");
-  };
-
-  const revealVote = () => {
-    setSelectedTarget("");
-    setError("");
-    setPhase("vote");
-  };
-
-  const submitVote = () => {
-    if (!currentVoter) return;
-
-    const vote = {
-      playerId: currentVoter.id,
-      targetId: selectedTarget || null
-    };
-
-    setVotes(prev => {
-      const updated = [...prev, vote];
-
-      if (safeVoteIndex + 1 < alivePlayers.length) {
-        setVoteIndex(safeVoteIndex + 1);
-        setPhase("vote-handoff");
-      } else {
-        finishVoting(updated);
-      }
-
-      return updated;
-    });
-
-    setError("");
-  };
-
-  const finishVoting = (submittedVotes) => {
-    const result = resolveVoting(players, submittedVotes);
-
-    setPlayers(result.players);
-    setVoteResult(result);
-
-    const gameWinner = getWinner(result.players);
-    if (gameWinner) {
-      setWinner(gameWinner);
-      setPhase("game-over");
-      return;
-    }
-
-    setPhase("vote-summary");
-  };
-
-  const nextRound = () => {
-    if (checkWinner(players)) return;
-
-    setRound(r => r + 1);
-    setTurnIndex(0);
-    setActions([]);
-    setNightResult(null);
-    setPrivateResults([]);
-    setPrivateIndex(0);
-    setVoteIndex(0);
-    setVotes([]);
-    setVoteResult(null);
-    setSelectedTarget("");
-    setActionAbstained(false);
-    setError("");
-
-    setPhase("action-handoff");
-  };
-
-  const formatTimer = (seconds) => {
-    const mins = Math.floor(seconds / 60);
-    const secs = seconds % 60;
-    return `${mins}:${secs < 10 ? "0" : ""}${secs}`;
-  };
-
-  const GameHeader = () => (
-    <header className="game-navbar">
-      <div className="game-round">
-        {isDaytimePhase ? "☀️" : "🌙"} ROUND {round}
-      </div>
-      <div className="game-status">👥 {alivePlayers.length} alive</div>
-    </header>
-  );
-
-  const ErrorMessage = () => (
-    error ? <div className="game-error">{error}</div> : null
-  );
+  const game = useGameController(initialPlayers);
 
   const isDaytimePhase = [
     "night-summary",
@@ -278,376 +22,129 @@ function Game({ settings, initialPlayers, onBack }) {
     "vote",
     "vote-summary",
     "game-over"
-  ].includes(phase);
+  ].includes(game.phase);
+
+  let phaseContent = null;
+
+  switch (game.phase) {
+    case "action-handoff":
+      phaseContent = (
+        <ActionHandoff
+          player={game.currentActionPlayer}
+          turnIndex={game.safeTurnIndex}
+          playerCount={game.alivePlayers.length}
+          onReveal={game.revealAction}
+        />
+      );
+      break;
+
+    case "action":
+      phaseContent = (
+        <NightAction
+          player={game.currentActionPlayer}
+          role={game.currentRole}
+          players={game.players}
+          eligibleTargets={game.eligibleTargets}
+          selectedTarget={game.selectedTarget}
+          setSelectedTarget={game.setSelectedTarget}
+          actionAbstained={game.actionAbstained}
+          setActionAbstained={game.setActionAbstained}
+          error={game.error}
+          onSubmit={game.submitAction}
+        />
+      );
+      break;
+
+    case "private-result":
+      phaseContent = (
+        <PrivateResult
+          result={game.currentPrivateResult}
+          onContinue={game.finishPrivateResult}
+        />
+      );
+      break;
+
+    case "night-summary":
+      phaseContent = (
+        <NightSummary
+          nightResult={game.nightResult}
+          aliveCount={game.alivePlayers.length}
+          onContinue={game.startDiscussionPhase}
+        />
+      );
+      break;
+
+    case "discussion":
+      phaseContent = (
+        <Discussion
+          timeLeft={game.timeLeft}
+          timerActive={game.timerActive}
+          onToggleTimer={game.toggleTimer}
+          onAddTime={game.addTimerTime}
+          onBeginVoting={game.beginVoting}
+        />
+      );
+      break;
+
+    case "vote-handoff":
+      phaseContent = (
+        <VoteHandoff
+          voter={game.currentVoter}
+          voteIndex={game.safeVoteIndex}
+          playerCount={game.alivePlayers.length}
+          onReveal={game.revealVote}
+        />
+      );
+      break;
+
+    case "vote":
+      phaseContent = (
+        <Voting
+          alivePlayers={game.alivePlayers}
+          voter={game.currentVoter}
+          selectedTarget={game.selectedTarget}
+          setSelectedTarget={game.setSelectedTarget}
+          error={game.error}
+          onSubmit={game.submitVote}
+        />
+      );
+      break;
+
+    case "vote-summary":
+      phaseContent = (
+        <VoteSummary
+          voteResult={game.voteResult}
+          aliveCount={game.alivePlayers.length}
+          onNextRound={game.nextRound}
+        />
+      );
+      break;
+
+    case "game-over":
+      phaseContent = (
+        <GameOver
+          winner={game.winner}
+          players={game.players}
+          onBack={onBack}
+        />
+      );
+      break;
+
+    default:
+      phaseContent = null;
+  }
 
   return (
     <main className={isDaytimePhase ? "game-page daytime-page-bg" : "game-page"}>
-      <GameHeader />
+      <GameHeader
+        isDaytimePhase={isDaytimePhase}
+        round={game.round}
+        aliveCount={game.alivePlayers.length}
+      />
 
       <div className="game-container">
-        <div key={phase} className="game-phase-screen">
-
-        {/* 1. NIGHT ACTION HANDOFF */}
-        {phase === "action-handoff" && currentActionPlayer && (
-          <section className="handoff-card">
-            <span className="game-eyebrow">🌙 NIGHTFALL PHASE</span>
-            <h1>Pass the device to</h1>
-            <div className="handoff-player">📱 {currentActionPlayer.name}</div>
-            <p>Ensure no one else is looking. Tap below when you hold the device securely in your hands.</p>
-            <div className="turn-counter">Player {safeTurnIndex + 1} of {alivePlayers.length}</div>
-            <button className="game-primary" onClick={revealAction}>
-              I am {currentActionPlayer.name} — Open Secret Screen 🔒
-            </button>
-          </section>
-        )}
-
-        {/* 2. SECRET NIGHT ACTION SCREEN */}
-        {phase === "action" && currentActionPlayer && currentRole && (
-          <section className="action-card">
-            <span className="game-eyebrow">🔐 KEEP YOUR ROLES SECRET</span>
-
-            <div className={`role-display ${currentRole.team}`}>
-              <div className="role-display-icon">{currentRole.icon ?? "❓"}</div>
-              <span>{currentRole.team.toUpperCase()} ALLIANCE</span>
-              <h1>{currentRole.name}</h1>
-              <p>{currentRole.description}</p>
-            </div>
-
-            {currentRole.team === "mafia" && (
-              <div className="teammates">
-                <strong>👥 Your Mafia Team:</strong>
-                <p>
-                  {players
-                    .filter(p => p.roleId === "mafia" && p.id !== currentActionPlayer.id && p.alive)
-                    .map(p => p.name)
-                    .join(", ") || "You are the only mafia member."}
-                </p>
-              </div>
-            )}
-
-            {currentRole.action && (
-              <>
-                <h3>🎯 {currentRole.action.label}</h3>
-                <p>{currentRole.action.description}</p>
-
-                <div className="target-list">
-                  {eligibleTargets.map(target => (
-                    <button
-                      key={target.id}
-                      className={selectedTarget === target.id ? "target-option selected" : "target-option"}
-                      onClick={() => {
-                        setSelectedTarget(target.id);
-                        setActionAbstained(false);
-                      }}
-                    >
-                      👤 {target.name} {target.id === currentActionPlayer.id ? " (Self)" : ""}
-                    </button>
-                  ))}
-                </div>
-
-                {currentRole.action.type === "mafiaVote" && (
-                  <button
-                    className={actionAbstained ? "target-option abstain selected" : "target-option abstain"}
-                    onClick={() => {
-                      setSelectedTarget("");
-                      setActionAbstained(true);
-                    }}
-                  >
-                    Don't Kill Anyone
-                  </button>
-                )}
-
-                {currentRole.action.type === "protect" && (
-                  <button
-                    className={actionAbstained ? "target-option abstain selected" : "target-option abstain"}
-                    onClick={() => {
-                      setSelectedTarget("");
-                      setActionAbstained(true);
-                    }}
-                  >
-                    Don't heal anyone
-                  </button>
-                )}
-
-                {currentRole.action.type === "investigate" && (
-                  <button
-                    className={actionAbstained ? "target-option abstain selected" : "target-option abstain"}
-                    onClick={() => {
-                      setSelectedTarget("");
-                      setActionAbstained(true);
-                    }}
-                  >
-                    Don't investigate anyone
-                  </button>
-                )}
-              </>
-            )}
-
-            {!currentRole.action && (
-              <div className="no-elimination">
-                🌟 You have no midnight duties. Rest peacefully until morning.
-              </div>
-            )}
-
-            <ErrorMessage />
-
-            <button className="game-primary" onClick={submitAction}>
-              Confirm & Hide Role 🙈
-            </button>
-          </section>
-        )}
-
-        {/* 3. DETECTIVE PRIVATE INVESTIGATION RESULT */}
-        {phase === "private-result" && currentPrivateResult && (
-          <section className="private-result">
-            <span className="game-eyebrow">🔍 INVESTIGATION INTEL</span>
-            <h1>Subject: {currentPrivateResult.targetName}</h1>
-
-            <div className={currentPrivateResult.isMafia ? "investigation-answer danger" : "investigation-answer safe"}>
-              {currentPrivateResult.isMafia
-                ? "⚠️ GUILTY: This player belongs to the Mafia team!"
-                : "✅ INNOCENT: This player is clean. NOT Mafia."}
-            </div>
-
-            <p>Keep this secret in memory, use it to your advantage.</p>
-
-            <button className="game-primary" onClick={finishPrivateResult}>
-              Got it, hide intelligence 👁️‍🗨️
-            </button>
-          </section>
-        )}
-
-        {/* 4. NIGHT SUMMARY (VIBRANT SUNNY DAYTIME VIEW) */}
-        {phase === "night-summary" && (
-          <section className="game-layout daytime-layout">
-            <span className="game-eyebrow daytime-eyebrow">
-              {nightResult?.eliminated?.length > 0 ? "🩸 BLOODY NIGHT" : "☀️ SILENT MORNING"}
-            </span>
-
-            <h1 className="daytime-heading">
-              {nightResult?.eliminated?.length > 0
-                ? "Tragedy struck under the cover of darkness..."
-                : "The morning sun rises over a peaceful town..."}
-            </h1>
-
-            {nightResult?.eliminated?.length > 0 ? (
-              <div className="elimination-list">
-                {nightResult.eliminated.map(player => (
-                  <div className="elimination-item daytime-elimination" key={player.id}>
-                    <h2>💀 {player.name}</h2>
-                    <p>Was found murdered this morning.</p>
-                    <strong>{ alivePlayers.length } Players remaining</strong>
-                  </div>
-                ))}
-              </div>
-            ) : (
-              <div className="no-elimination daytime-box">
-                🕊️ Peaceful Morning! No one was killed last night.
-              </div>
-            )}
-
-            {/* Explicit Doctor Save Announcement (Only shown if doctor saved the actual targeted player) */}
-            {nightResult?.savedPlayerName && (
-              <div className="doctor-save-banner daytime-banner">
-                🏥 <strong>Miraculous Save:</strong> The doctor saved <strong>{nightResult.savedPlayerName}</strong> from a mafia attack!
-              </div>
-            )}
-
-            <button className="game-primary daytime-btn" onClick={startDiscussionPhase}>
-              Start Discussion 🗣️
-            </button>
-          </section>
-        )}
-
-        {/* 5. 1:30 MINUTES DISCUSSION TIMER PHASE (VIBRANT DAYTIME) */}
-        {phase === "discussion" && (
-          <section className="game-layout daytime-layout discussion-phase">
-            <span className="game-eyebrow daytime-eyebrow">☕ TOWN HALL MEETING</span>
-            <h1 className="daytime-heading">Everyone can speak now.</h1>
-            <p className="daytime-desc">Talk openly, debate known facts, prove your innocence, and expose the Mafia!</p>
-
-            <div className="timer-display-box daytime-timer-box">
-              <span className="timer-clock-icon">⏳</span>
-              <div className="timer-countdown">{formatTimer(timeLeft)}</div>
-              <span className="timer-label">Remaining Time</span>
-            </div>
-
-            <div className="timer-controls">
-              <button
-                className="timer-toggle-btn daytime-sub-btn"
-                onClick={() => setTimerActive(!timerActive)}
-              >
-                {timerActive ? "⏸️ Pause Timer" : "▶️ Resume Timer"}
-              </button>
-              <button
-                className="timer-add-btn daytime-sub-btn"
-                onClick={() => setTimeLeft(prev => prev + 30)}
-              >
-                ➕ Add 30s
-              </button>
-            </div>
-
-            <button className="game-primary daytime-btn" onClick={beginVoting}>
-              Proceed to Voting 🗳️
-            </button>
-          </section>
-        )}
-
-        {/* 6. DAYTIME VOTING HANDOFF */}
-        {phase === "vote-handoff" && currentVoter && (
-          <section className="handoff-card daytime-layout voting-handoff">
-            <span className="game-eyebrow daytime-eyebrow">
-              ☀️ TOWN VOTING
-            </span>
-
-            <h1 className="daytime-heading">
-              Time to make your judgment.
-            </h1>
-
-            <p className="daytime-desc">
-              Pass the device to the next voter. Make sure previous players
-              cannot see your ballot.
-            </p>
-
-            <div className="handoff-player daytime-player">
-              👤 {currentVoter.name}
-            </div>
-
-            <div className="turn-counter daytime-counter">
-              VOTER {safeVoteIndex + 1} OF {alivePlayers.length}
-            </div>
-
-            <button className="game-primary daytime-btn" onClick={revealVote}>
-              I am {currentVoter.name} — Cast My Vote 🗳️
-            </button>
-          </section>
-        )}
-
-        {/* 7. PRIVATE DAYTIME VOTING SCREEN */}
-        {phase === "vote" && currentVoter && (
-          <section className="game-layout daytime-layout voting-phase">
-            <span className="game-eyebrow daytime-eyebrow">
-              ⚖️ SECRET VOTING
-            </span>
-
-            <h1 className="daytime-heading">
-              Who do you think is suspicious?
-            </h1>
-
-            <p className="daytime-desc">
-              Select the player you believe to the Mafia.
-              Your vote will remain a SECRET.
-            </p>
-
-            <div className="voting-instructions">
-              <span>🗳️</span>
-              <div>
-                <strong>Make your decision carefully</strong>
-                <p>Once submitted, your vote cannot be changed.</p>
-              </div>
-            </div>
-
-            <div className="target-list daytime-target-list">
-              {alivePlayers
-                .filter(player => player.id !== currentVoter.id)
-                .map(player => (
-                  <button
-                    key={player.id}
-                    className={
-                      selectedTarget === player.id
-                        ? "target-option daytime-target selected"
-                        : "target-option daytime-target"
-                    }
-                    onClick={() => setSelectedTarget(player.id)}
-                  >
-                    <span>👤 {player.name}</span>
-                    <span className="vote-selection-indicator">
-                      {selectedTarget === player.id ? "✓" : ""}
-                    </span>
-                  </button>
-                ))}
-            </div>
-
-            <button
-              className={
-                selectedTarget === ""
-                  ? "target-option daytime-abstain selected"
-                  : "target-option daytime-abstain"
-              }
-              onClick={() => setSelectedTarget("")}
-            >
-              💤 No vote
-            </button>
-
-            <ErrorMessage />
-
-            <button
-              className="game-primary daytime-btn"
-              onClick={submitVote}
-            >
-              Submit Vote 🔒
-            </button>
-          </section>
-        )}
-
-        {/* 8. VOTING SUMMARY (VIBRANT DAYTIME) */}
-        {phase === "vote-summary" && (
-          <section className="game-layout daytime-layout">
-            <span className="game-eyebrow daytime-eyebrow">⚖️ TOWN JUDGMENT</span>
-            <h1 className="daytime-heading">The votes have been tallied.</h1>
-
-            {voteResult?.eliminated ? (
-              <div className="elimination-list">
-                <div className="elimination-item daytime-elimination">
-                  <h2>🔨 {voteResult.eliminated.name}</h2>
-                  <p>Has been voted out and lynched by majority town decision.</p>
-                  <strong>{alivePlayers.length}</strong>
-                </div>
-              </div>
-            ) : (
-              <div className="no-elimination daytime-box">
-                ⚖️ The vote ended in a tie. No one was lynched today!
-              </div>
-            )}
-
-            <button className="game-primary daytime-btn" onClick={nextRound}>
-              Advance to Next Night 🌙
-            </button>
-          </section>
-        )}
-
-        {/* 9. GAME OVER SCREEN (VIBRANT DAYTIME) */}
-        {phase === "game-over" && (
-          <section className="game-over daytime-layout">
-            <div className="winner-icon">{winner === "town" ? "☀️" : "♠️"}</div>
-            <span className="game-eyebrow daytime-eyebrow">🏆 GAME CONCLUDED</span>
-            <h1 className="daytime-heading">{winner === "town" ? "The CITIZENS Triumphed!" : "The MAFIAS Conquered!"}</h1>
-            <p className="daytime-desc">
-              {winner === "town"
-                ? "All MAFIA members have been removed from town. CITIZENS wins"
-                : "The MAFIA members rule over CITIZENS. MAFIA wins."}
-            </p>
-
-            <h3>📜 Final Role Ledger</h3>
-
-            <div className="final-players">
-              {players.map(player => (
-                <div className="final-player" key={player.id}>
-                  <span>👤 {player.name}</span>
-                  <strong>{getRole(player.roleId)?.name}</strong>
-                  <span className={player.alive ? "status-alive" : "status-dead"}>
-                    {player.alive ? "🟢 Alive" : "🔴 Dead"}
-                  </span>
-                </div>
-              ))}
-            </div>
-
-            <button className="game-primary daytime-btn" onClick={onBack}>
-              Return to Setup 🏠
-            </button>
-          </section>
-        )}
-
+        <div key={game.phase} className="game-phase-screen">
+          {phaseContent}
         </div>
       </div>
     </main>
