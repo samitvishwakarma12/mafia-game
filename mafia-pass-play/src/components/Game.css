@@ -804,3 +804,155 @@
     max-height: 280px;
   }
 }
+
+
+/* =========================================
+   SMOOTHER PHASE & TOUCH INTERACTIONS
+   Motion only — existing colors and styling stay unchanged
+========================================= */
+
+/* Each game phase is remounted with its phase key in Game.jsx. */
+.game-phase-screen {
+  width: 100%;
+  animation: phaseEnter 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
+  transform-origin: 50% 12%;
+  will-change: opacity, transform;
+}
+
+@keyframes phaseEnter {
+  from { opacity: 0; transform: translate3d(0, 14px, 0) scale(0.99); }
+  to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
+}
+
+/* Softer entrances for the existing cards. */
+.handoff-card,
+.game-over,
+.game-layout.daytime-layout,
+.handoff-card.daytime-layout {
+  animation-duration: 520ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.action-card,
+.private-result {
+  animation-duration: 480ms;
+  animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Smooth state changes without altering the existing palette. */
+.game-page,
+.game-navbar,
+.game-round,
+.game-status,
+.handoff-player,
+.role-display,
+.teammates,
+.timer-display-box,
+.timer-countdown,
+.daytime-elimination,
+.daytime-box,
+.daytime-banner,
+.daytime-timer-box,
+.voting-instructions,
+.vote-selection-indicator,
+.final-player,
+.game-error {
+  transition: background-color 280ms ease, border-color 280ms ease,
+    color 280ms ease, box-shadow 280ms ease, opacity 280ms ease;
+}
+
+.target-option,
+.daytime-target,
+.daytime-abstain,
+.game-primary,
+.daytime-btn,
+.timer-toggle-btn,
+.timer-add-btn,
+.daytime-sub-btn {
+  -webkit-tap-highlight-color: transparent;
+  touch-action: manipulation;
+  transition: background-color 240ms ease, border-color 240ms ease,
+    color 240ms ease, box-shadow 240ms ease, transform 240ms ease,
+    opacity 240ms ease;
+}
+
+.target-option:active,
+.daytime-target:active,
+.daytime-abstain:active,
+.game-primary:active,
+.daytime-btn:active,
+.timer-toggle-btn:active,
+.timer-add-btn:active,
+.daytime-sub-btn:active {
+  transform: scale(0.985);
+}
+
+.elimination-item,
+.no-elimination,
+.voting-instructions,
+.doctor-save-banner {
+  animation: contentFadeUp 440ms cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.elimination-item:nth-child(2),
+.final-player:nth-child(2) { animation-delay: 45ms; }
+.elimination-item:nth-child(3),
+.final-player:nth-child(3) { animation-delay: 90ms; }
+.elimination-item:nth-child(4),
+.final-player:nth-child(4) { animation-delay: 135ms; }
+
+@keyframes contentFadeUp {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .target-option:hover,
+  .daytime-target:hover,
+  .daytime-abstain:hover,
+  .game-primary:hover,
+  .daytime-btn:hover,
+  .timer-toggle-btn:hover,
+  .timer-add-btn:hover,
+  .daytime-sub-btn:hover {
+    transition-duration: 240ms;
+  }
+}
+
+@media (max-width: 600px) {
+  .game-phase-screen {
+    animation-duration: 460ms;
+  }
+
+  .target-option,
+  .daytime-target,
+  .daytime-abstain,
+  .game-primary,
+  .daytime-btn,
+  .timer-toggle-btn,
+  .timer-add-btn,
+  .daytime-sub-btn {
+    transition-duration: 260ms;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-phase-screen,
+  .handoff-card,
+  .game-over,
+  .game-layout.daytime-layout,
+  .handoff-card.daytime-layout,
+  .action-card,
+  .private-result,
+  .elimination-item,
+  .no-elimination,
+  .voting-instructions,
+  .doctor-save-banner {
+    animation: none !important;
+  }
+
+  *, *::before, *::after {
+    scroll-behavior: auto !important;
+    transition-duration: 0.01ms !important;
+  }
+}

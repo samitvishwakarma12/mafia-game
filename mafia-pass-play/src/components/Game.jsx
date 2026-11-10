@@ -101,7 +101,7 @@ function Game({ settings, initialPlayers, onBack }) {
       !selectedTarget &&
       (!canAbstain || !actionAbstained)
     ) {
-      setError("⚠️ Please pick someone or choose the special abstain option below.");
+      setError("⚠️ Pick someone to  kill or choose the abstain (no kill) option below.");
       return;
     }
 
@@ -285,6 +285,7 @@ function Game({ settings, initialPlayers, onBack }) {
       <GameHeader />
 
       <div className="game-container">
+        <div key={phase} className="game-phase-screen">
 
         {/* 1. NIGHT ACTION HANDOFF */}
         {phase === "action-handoff" && currentActionPlayer && (
@@ -303,7 +304,7 @@ function Game({ settings, initialPlayers, onBack }) {
         {/* 2. SECRET NIGHT ACTION SCREEN */}
         {phase === "action" && currentActionPlayer && currentRole && (
           <section className="action-card">
-            <span className="game-eyebrow">🔐 SECRET ROLE BRIEFING</span>
+            <span className="game-eyebrow">🔐 KEEP YOUR ROLES SECRET</span>
 
             <div className={`role-display ${currentRole.team}`}>
               <div className="role-display-icon">{currentRole.icon ?? "❓"}</div>
@@ -314,12 +315,12 @@ function Game({ settings, initialPlayers, onBack }) {
 
             {currentRole.team === "mafia" && (
               <div className="teammates">
-                <strong>👥 Your Syndicate Associates:</strong>
+                <strong>👥 Your Mafia Team:</strong>
                 <p>
                   {players
                     .filter(p => p.roleId === "mafia" && p.id !== currentActionPlayer.id && p.alive)
                     .map(p => p.name)
-                    .join(", ") || "You operate completely alone in the shadows."}
+                    .join(", ") || "You are the only mafia member."}
                 </p>
               </div>
             )}
@@ -352,7 +353,7 @@ function Game({ settings, initialPlayers, onBack }) {
                       setActionAbstained(true);
                     }}
                   >
-                    🔪 Mafia Blood-Truc: Abstain & commit no assassination tonight
+                    Don't Kill Anyone
                   </button>
                 )}
 
@@ -364,7 +365,7 @@ function Game({ settings, initialPlayers, onBack }) {
                       setActionAbstained(true);
                     }}
                   >
-                    🏥 Medical Rest: Skip healing anyone and take the night off
+                    Don't heal anyone
                   </button>
                 )}
 
@@ -376,7 +377,7 @@ function Game({ settings, initialPlayers, onBack }) {
                       setActionAbstained(true);
                     }}
                   >
-                    💤 Skip Investigation: Stay quiet and investigate no one tonight
+                    Don't investigate anyone
                   </button>
                 )}
               </>
@@ -391,7 +392,7 @@ function Game({ settings, initialPlayers, onBack }) {
             <ErrorMessage />
 
             <button className="game-primary" onClick={submitAction}>
-              Confirm & Conceal Role 🙈
+              Confirm & Hide Role 🙈
             </button>
           </section>
         )}
@@ -404,11 +405,11 @@ function Game({ settings, initialPlayers, onBack }) {
 
             <div className={currentPrivateResult.isMafia ? "investigation-answer danger" : "investigation-answer safe"}>
               {currentPrivateResult.isMafia
-                ? "⚠️ GUILTY: This individual belongs to the Mafia syndicate!"
-                : "✅ INNOCENT: This individual checks out clean. Not Mafia."}
+                ? "⚠️ GUILTY: This player belongs to the Mafia team!"
+                : "✅ INNOCENT: This player is clean. NOT Mafia."}
             </div>
 
-            <p>Commit this secret to memory. Conceal the screen before handing the device back.</p>
+            <p>Keep this secret in memory, use it to your advantage.</p>
 
             <button className="game-primary" onClick={finishPrivateResult}>
               Got it, hide intelligence 👁️‍🗨️
@@ -426,7 +427,7 @@ function Game({ settings, initialPlayers, onBack }) {
             <h1 className="daytime-heading">
               {nightResult?.eliminated?.length > 0
                 ? "Tragedy struck under the cover of darkness..."
-                : "The morning sun breaks over a peaceful town..."}
+                : "The morning sun rises over a peaceful town..."}
             </h1>
 
             {nightResult?.eliminated?.length > 0 ? (
@@ -435,25 +436,25 @@ function Game({ settings, initialPlayers, onBack }) {
                   <div className="elimination-item daytime-elimination" key={player.id}>
                     <h2>💀 {player.name}</h2>
                     <p>Was found murdered this morning.</p>
-                    <strong>Role Revealed: {getRole(player.roleId)?.name}</strong>
+                    <strong>{ alivePlayers.length } Players remaining</strong>
                   </div>
                 ))}
               </div>
             ) : (
               <div className="no-elimination daytime-box">
-                🕊️ Peaceful dawn! No one was killed last night.
+                🕊️ Peaceful Morning! No one was killed last night.
               </div>
             )}
 
             {/* Explicit Doctor Save Announcement (Only shown if doctor saved the actual targeted player) */}
             {nightResult?.savedPlayerName && (
               <div className="doctor-save-banner daytime-banner">
-                🏥 <strong>Miraculous Heal:</strong> The town doctor successfully saved <strong>{nightResult.savedPlayerName}</strong> from a lethal midnight attack!
+                🏥 <strong>Miraculous Save:</strong> The doctor saved <strong>{nightResult.savedPlayerName}</strong> from a mafia attack!
               </div>
             )}
 
             <button className="game-primary daytime-btn" onClick={startDiscussionPhase}>
-              Start Town Discussion 🗣️
+              Start Discussion 🗣️
             </button>
           </section>
         )}
@@ -462,13 +463,13 @@ function Game({ settings, initialPlayers, onBack }) {
         {phase === "discussion" && (
           <section className="game-layout daytime-layout discussion-phase">
             <span className="game-eyebrow daytime-eyebrow">☕ TOWN HALL MEETING</span>
-            <h1 className="daytime-heading">Open Debate & Accusations</h1>
-            <p className="daytime-desc">Talk openly, cross-examine alibis, defend your innocence, and expose the hidden Mafia!</p>
+            <h1 className="daytime-heading">Everyone can speak now.</h1>
+            <p className="daytime-desc">Talk openly, debate known facts, prove your innocence, and expose the Mafia!</p>
 
             <div className="timer-display-box daytime-timer-box">
               <span className="timer-clock-icon">⏳</span>
               <div className="timer-countdown">{formatTimer(timeLeft)}</div>
-              <span className="timer-label">Remaining Discussion Time</span>
+              <span className="timer-label">Remaining Time</span>
             </div>
 
             <div className="timer-controls">
@@ -487,7 +488,7 @@ function Game({ settings, initialPlayers, onBack }) {
             </div>
 
             <button className="game-primary daytime-btn" onClick={beginVoting}>
-              Proceed to Town Vote 🗳️
+              Proceed to Voting 🗳️
             </button>
           </section>
         )}
@@ -526,23 +527,23 @@ function Game({ settings, initialPlayers, onBack }) {
         {phase === "vote" && currentVoter && (
           <section className="game-layout daytime-layout voting-phase">
             <span className="game-eyebrow daytime-eyebrow">
-              ⚖️ CONFIDENTIAL BALLOT
+              ⚖️ SECRET VOTING
             </span>
 
             <h1 className="daytime-heading">
-              Who deserves your suspicion?
+              Who do you think is suspicious?
             </h1>
 
             <p className="daytime-desc">
-              Select the player you believe belongs to the Mafia.
-              Your vote will remain confidential.
+              Select the player you believe to the Mafia.
+              Your vote will remain a SECRET.
             </p>
 
             <div className="voting-instructions">
               <span>🗳️</span>
               <div>
                 <strong>Make your decision carefully</strong>
-                <p>Once submitted, your ballot cannot be changed.</p>
+                <p>Once submitted, your vote cannot be changed.</p>
               </div>
             </div>
 
@@ -575,7 +576,7 @@ function Game({ settings, initialPlayers, onBack }) {
               }
               onClick={() => setSelectedTarget("")}
             >
-              💤 Abstain — Cast no vote
+              💤 No vote
             </button>
 
             <ErrorMessage />
@@ -584,7 +585,7 @@ function Game({ settings, initialPlayers, onBack }) {
               className="game-primary daytime-btn"
               onClick={submitVote}
             >
-              Submit Ballot Confidentially 🔒
+              Submit Vote 🔒
             </button>
           </section>
         )}
@@ -599,13 +600,13 @@ function Game({ settings, initialPlayers, onBack }) {
               <div className="elimination-list">
                 <div className="elimination-item daytime-elimination">
                   <h2>🔨 {voteResult.eliminated.name}</h2>
-                  <p>Has been voted out and permanently exiled by majority town decision.</p>
-                  <strong>Role Revealed: {getRole(voteResult.eliminated.roleId)?.name}</strong>
+                  <p>Has been voted out and lynched by majority town decision.</p>
+                  <strong>{alivePlayers.length}</strong>
                 </div>
               </div>
             ) : (
               <div className="no-elimination daytime-box">
-                ⚖️ The vote ended in a deadlock or everyone abstained. No one was banished today!
+                ⚖️ The vote ended in a tie. No one was lynched today!
               </div>
             )}
 
@@ -620,11 +621,11 @@ function Game({ settings, initialPlayers, onBack }) {
           <section className="game-over daytime-layout">
             <div className="winner-icon">{winner === "town" ? "☀️" : "♠️"}</div>
             <span className="game-eyebrow daytime-eyebrow">🏆 GAME CONCLUDED</span>
-            <h1 className="daytime-heading">{winner === "town" ? "The Town Triumphed!" : "The Mafia Conquered!"}</h1>
+            <h1 className="daytime-heading">{winner === "town" ? "The CITIZENS Triumphed!" : "The MAFIAS Conquered!"}</h1>
             <p className="daytime-desc">
               {winner === "town"
-                ? "All hidden mafia threats have been successfully purged from town."
-                : "The criminal syndicate has outnumbered the innocent townspeople."}
+                ? "All MAFIA members have been removed from town. CITIZENS wins"
+                : "The MAFIA members rule over CITIZENS. MAFIA wins."}
             </p>
 
             <h3>📜 Final Role Ledger</h3>
@@ -635,7 +636,7 @@ function Game({ settings, initialPlayers, onBack }) {
                   <span>👤 {player.name}</span>
                   <strong>{getRole(player.roleId)?.name}</strong>
                   <span className={player.alive ? "status-alive" : "status-dead"}>
-                    {player.alive ? "🟢 Alive" : "🔴 Eliminated"}
+                    {player.alive ? "🟢 Alive" : "🔴 Dead"}
                   </span>
                 </div>
               ))}
@@ -647,6 +648,7 @@ function Game({ settings, initialPlayers, onBack }) {
           </section>
         )}
 
+        </div>
       </div>
     </main>
   );
