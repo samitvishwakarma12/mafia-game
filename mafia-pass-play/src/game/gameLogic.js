@@ -1,4 +1,3 @@
-
 import { getRole } from "./roles";
 
 export function getAlivePlayers(players) {
@@ -11,13 +10,15 @@ export function getEligibleTargets(player, players) {
   if (!role?.action) return [];
 
   return getAlivePlayers(players).filter(target => {
-    if (target.id === player.id && !role.allowSelf) {
+    // Mafia can now target themselves if they choose to commit suicide
+    if (target.id === player.id && !role.allowSelf && role.id !== "mafia") {
       return false;
     }
 
     switch (role.targetRule) {
       case "nonMafia":
-        return target.roleId !== "mafia";
+        // Mafia can target anyone including themselves now
+        return true;
 
       case "alive":
         return true;
@@ -28,8 +29,6 @@ export function getEligibleTargets(player, players) {
   });
 }
 
-// Returns the player receiving the most votes.
-// Returns null if nobody received votes or there is a tie.
 function getPluralityTarget(votes) {
   const counts = {};
 
@@ -61,9 +60,6 @@ function getPluralityTarget(votes) {
 
 export function resolveNight(players, actions) {
   const protectedPlayers = new Set();
-
-  // Validate actions: only living players can act,
-  // and each action must match that player's role.
   const seenPlayers = new Set();
 
   const validActions = actions.filter(action => {
@@ -83,11 +79,12 @@ export function resolveNight(players, actions) {
       return false;
     }
 
-    // Mafia and Doctor may explicitly abstain.
+    // Allow abstentions for mafia, doctor, and detective
     if (!action.targetId) {
       if (
         action.type !== "mafiaVote" &&
-        action.type !== "protect"
+        action.type !== "protect" &&
+        action.type !== "investigate"
       ) {
         return false;
       }
@@ -96,7 +93,6 @@ export function resolveNight(players, actions) {
       return true;
     }
 
-    // Validate that the selected target is eligible.
     const eligibleTargets = getEligibleTargets(
       player,
       players
@@ -134,21 +130,22 @@ export function resolveNight(players, actions) {
 
   const attackTargetId = getPluralityTarget(mafiaActions);
 
-  const attackTarget = attackTargetId
-    ? players.find(player => player.id === attackTargetId)
-    : null;
-
-  // A protected target survives the attack.
-  const attackBlocked =
+  // A target is truly "saved" ONLY IF the doctor protected the exact target the mafia attacked
+  const isAttackBlocked =
     attackTargetId !== null &&
     protectedPlayers.has(attackTargetId);
 
+  const savedPlayerName = isAttackBlocked
+    ? (players.find(p => p.id === attackTargetId)?.name ?? null)
+    : null;
+
   const eliminatedIds = [];
 
-  if (attackTargetId && !attackBlocked) {
+  if (attackTargetId && !isAttackBlocked) {
     eliminatedIds.push(attackTargetId);
   }
 
+  // Properly map and eliminate players
   const updatedPlayers = players.map(player => ({
     ...player,
     alive: eliminatedIds.includes(player.id)
@@ -160,10 +157,8 @@ export function resolveNight(players, actions) {
     player => eliminatedIds.includes(player.id)
   );
 
-  // Keep investigation results available to callers,
-  // although the UI now displays them immediately.
   const privateResults = validActions
-    .filter(action => action.type === "investigate")
+    .filter(action => action.type === "investigate" && action.targetId)
     .map(action => {
       const target = players.find(
         player => player.id === action.targetId
@@ -171,19 +166,18 @@ export function resolveNight(players, actions) {
 
       return {
         playerId: action.playerId,
-        targetName: target.name,
-        isMafia: target.roleId === "mafia"
+        targetName: target ? target.name : "Unknown",
+        isMafia: target ? target.roleId === "mafia" : false
       };
     });
 
-  // Determine why nobody was eliminated, for internal use.
   let outcome = "no-mafia-action";
 
   if (mafiaActions.length > 0 && mafiaVotes.length === 0) {
     outcome = "mafia-abstained";
   } else if (mafiaVotes.length > 0 && !attackTargetId) {
     outcome = "mafia-tied";
-  } else if (attackBlocked) {
+  } else if (isAttackBlocked) {
     outcome = "protected";
   } else if (attackTargetId) {
     outcome = "eliminated";
@@ -193,7 +187,8 @@ export function resolveNight(players, actions) {
     players: updatedPlayers,
     eliminated,
     privateResults,
-    attackTarget,
+    attackTarget: attackTargetId ? players.find(p => p.id === attackTargetId) : null,
+    savedPlayerName,
     protectedPlayerIds: [...protectedPlayers],
     outcome
   };
@@ -215,7 +210,6 @@ export function resolveVoting(players, votes) {
 
     if (!voter?.alive) return false;
 
-    // Abstentions are valid votes.
     if (!vote.targetId) {
       seenVoters.add(vote.playerId);
       return true;
@@ -225,7 +219,6 @@ export function resolveVoting(players, votes) {
       player => player.id === vote.targetId
     );
 
-    // A player cannot vote for themselves or a dead player.
     if (!target?.alive || target.id === voter.id) {
       return false;
     }

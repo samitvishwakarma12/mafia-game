@@ -1,30 +1,7 @@
-
 .app {
-  min-height: 100vh;
-}
-
-.placeholder-screen {
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  text-align: center;
   background: #151321;
   color: #f8f5ff;
-  padding: 24px;
-}
-
-.placeholder-screen p {
-  color: #aaa5ba;
-}
-
-.placeholder-screen button {
-  padding: 12px 20px;
-  background: #f7bc55;
-  color: #24192e;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: 700;
 }

@@ -1,152 +1,305 @@
-
 .game-page {
   min-height: 100vh;
-  padding-bottom: 60px;
-  background:
-    radial-gradient(ellipse at 50% 0%, #332345 0%, transparent 55%),
-    #151321;
+  padding-bottom: 40px;
+  /* Dynamic Background: Defaults to dark, but transitions smoothly when daytime classes apply */
+  background: radial-gradient(circle at 50% 0%, #291c3d 0%, #0d0b14 70%);
+  color: #f8f5ff;
+  transition: background 0.4s ease;
+}
+
+/* DAYTIME PAGE BACKGROUND OVERRIDE */
+.game-page.daytime-page-bg {
+  background: radial-gradient(circle at 50% 0%, #fef3c7 0%, #fde68a 50%, #fbbf24 100%) !important;
+  color: #1e293b !important;
 }
 
 .game-navbar {
-  height: 76px;
-  padding: 0 8%;
+  height: 70px;
+  padding: 0 5%;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid #ffffff12;
-}
-
-.game-navbar .brand {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 19px;
-  font-weight: 700;
-  letter-spacing: 2px;
-}
-
-.game-navbar .brand-icon {
-  width: 34px;
-  height: 34px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(13, 11, 20, 0.8);
+  backdrop-filter: blur(10px);
+  position: sticky;
+  top: 0;
+  z-index: 10;
 }
 
 .game-round {
-  font-size: 10px;
+  font-size: 0.75rem;
   font-weight: 800;
-  letter-spacing: 1px;
+  letter-spacing: 1.5px;
   color: #f7bc55;
+  background: rgba(247, 188, 85, 0.1);
+  padding: 6px 12px;
+  border-radius: 20px;
 }
 
 .game-status {
-  display: flex;
-  justify-content: space-between;
-  width: min(650px, 90%);
-  margin: 18px auto 0;
-  color: #888297;
-  font-size: 9px;
+  font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 1px;
+  color: #a39eb8;
 }
 
 .game-container {
-  width: min(650px, 90%);
-  margin: 45px auto 0;
+  width: min(520px, 92%);
+  margin: 30px auto 0;
 }
 
-.game-stage {
-  display: flex;
-  justify-content: center;
-  align-items: flex-start;
-}
-
-.game-heading {
+/* Base Party Cards (Nighttime UI) */
+.handoff-card, .game-over {
+  background: linear-gradient(135deg, rgba(36, 29, 56, 0.9), rgba(21, 17, 33, 0.9));
+  border: 1px solid rgba(247, 188, 85, 0.2);
+  border-radius: 20px;
+  padding: 30px 22px;
   text-align: center;
-  margin-bottom: 30px;
+  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  animation: partyPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+}
+
+/* VIBRANT SUNNY DAYTIME CARD & BACKGROUND STYLING */
+.daytime-layout {
+  background: #ffffff !important;
+  color: #1e293b !important;
+  border: 2px solid #f59e0b !important;
+  box-shadow: 0 25px 50px rgba(245, 158, 11, 0.25) !important;
+  box-sizing: border-box;
+  max-width: 100%;
+}
+
+.daytime-eyebrow {
+  color: #d97706 !important;
+}
+
+.daytime-heading {
+  color: #0f172a !important;
+  word-break: break-word;
+}
+
+.daytime-desc {
+  color: #475569 !important;
+}
+
+.daytime-elimination {
+  background: #fef2f2 !important;
+  border: 1px solid #fecaca !important;
+  color: #991b1b !important;
+}
+
+.daytime-elimination h2 {
+  color: #dc2626 !important;
+}
+
+.daytime-elimination p {
+  color: #7f1d1d !important;
+}
+
+.daytime-box {
+  background: #f0fdf4 !important;
+  border: 1px solid #bbf7d0 !important;
+  color: #166534 !important;
+}
+
+.daytime-banner {
+  background: #ecfdf5 !important;
+  border: 1px solid #10b981 !important;
+  color: #065f46 !important;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  font-weight: 600;
+  text-align: left;
+}
+
+.daytime-btn {
+  background: #d97706 !important;
+  color: #ffffff !important;
+  box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4) !important;
+  white-space: normal !important;
+  word-break: break-word;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.daytime-btn:hover {
+  background: #b45309 !important;
+}
+
+.daytime-timer-box {
+  background: #fef9c3 !important;
+  border: 2px solid #f59e0b !important;
+  color: #78350f !important;
+}
+
+.daytime-sub-btn {
+  background: #fef3c7 !important;
+  color: #78350f !important;
+  border: 1px solid #fcd34d !important;
+}
+
+.daytime-sub-btn:hover {
+  background: #fde68a !important;
+}
+
+/* Serious Action Cards (Sober, Dark, High Contrast for Secret Roles) */
+.action-card, .private-result {
+  background: #09080d;
+  border: 2px solid rgba(239, 68, 68, 0.3);
+  border-radius: 20px;
+  padding: 30px 22px;
+  text-align: center;
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  animation: seriousFadeIn 0.3s ease-out both;
 }
 
 .game-eyebrow {
-  color: #f7bc55;
-  font-size: 10px;
+  font-size: 0.7rem;
   font-weight: 800;
-  letter-spacing: 1.8px;
+  letter-spacing: 2px;
+  color: #f7bc55;
+  text-transform: uppercase;
 }
 
-.game-heading h1,
-.handoff-card h1,
-.action-card > h1,
-.result-card h1 {
+.handoff-player {
   font-family: 'Space Grotesk', sans-serif;
-  font-size: clamp(29px, 5vw, 40px);
-  letter-spacing: -1px;
-  margin: 14px 0;
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #ffffff;
+  background: rgba(255, 255, 255, 0.05);
+  padding: 12px;
+  border-radius: 12px;
+  margin: 15px 0;
+  border: 1px dashed rgba(255, 255, 255, 0.15);
 }
 
-.game-heading p,
-.handoff-card > p,
-.result-card > p {
-  color: #aaa5ba;
-  font-size: 13px;
-  line-height: 1.7;
+.turn-counter {
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: #888297;
+  margin: 15px 0 5px;
 }
 
-.registration-card,
-.handoff-card,
-.action-card,
-.result-card {
-  width: 100%;
-  padding: 28px;
-  border-radius: 16px;
-  background: #ffffff09;
-  border: 1px solid #ffffff17;
+/* Role Showcase Box */
+.role-display {
+  padding: 20px;
+  border-radius: 14px;
+  margin: 15px 0;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.registration-card {
+.role-display.mafia {
+  background: rgba(239, 68, 68, 0.08);
+  border-color: rgba(239, 68, 68, 0.3);
+}
+
+.role-display.town {
+  background: rgba(59, 130, 246, 0.08);
+  border-color: rgba(59, 130, 246, 0.3);
+}
+
+.role-display-icon {
+  font-size: 3rem;
+  margin-bottom: 5px;
+}
+
+.role-display h1 {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.8rem;
+  margin: 8px 0;
+}
+
+.role-display.mafia h1 { color: #f87171; }
+.role-display.town h1 { color: #60a5fa; }
+
+.teammates {
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 12px;
+  border-radius: 10px;
+  margin-bottom: 15px;
+  text-align: left;
+  font-size: 0.85rem;
+}
+
+.teammates strong {
+  color: #fca5a5;
+  display: block;
+  margin-bottom: 4px;
+}
+
+/* Target Buttons */
+.target-list {
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 8px;
+  max-height: 200px;
+  overflow-y: auto;
+  margin: 12px 0;
+  padding-right: 4px;
 }
 
-.name-field {
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  padding: 12px 15px;
-  border-radius: 9px;
-  background: #ffffff08;
-  border: 1px solid #ffffff12;
+.target-option {
+  width: 100%;
+  padding: 12px 16px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+  color: #fff;
+  font-weight: 600;
+  font-size: 0.95rem;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
 }
 
-.name-field > span {
-  font-size: 10px;
-  font-weight: 800;
+.target-option:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.25);
+}
+
+.target-option.selected {
+  background: rgba(247, 188, 85, 0.2);
+  border-color: #f7bc55;
   color: #f7bc55;
 }
 
-.name-field input {
-  flex: 1;
-  min-width: 0;
-  background: transparent;
-  border: none;
-  outline: none;
-  color: #f8f5ff;
-  font-size: 13px;
+.target-option.abstain {
+  text-align: center;
+  font-style: italic;
+  color: #a39eb8;
+  background: rgba(255, 255, 255, 0.02);
 }
 
-.name-field input:focus {
-  color: #f7bc55;
+.target-option.abstain.selected {
+  background: rgba(148, 163, 184, 0.2);
+  border-color: #94a3b8;
+  color: #cbd5e1;
 }
 
+/* Primary Action Buttons */
 .game-primary {
   width: 100%;
-  margin-top: 22px;
-  padding: 16px;
+  box-sizing: border-box;
+  padding: 14px 16px;
   border: none;
-  border-radius: 9px;
+  border-radius: 12px;
   background: #f7bc55;
-  color: #24192e;
-  font-size: 11px;
+  color: #151321;
   font-weight: 800;
-  letter-spacing: 1px;
+  font-size: 0.95rem;
+  letter-spacing: 0.5px;
   cursor: pointer;
-  transition: 0.2s;
+  margin-top: 15px;
+  box-shadow: 0 4px 15px rgba(247, 188, 85, 0.3);
+  transition: transform 0.15s ease, background 0.15s ease;
+  white-space: normal;
+  word-break: break-word;
 }
 
 .game-primary:hover {
@@ -154,348 +307,500 @@
   transform: translateY(-2px);
 }
 
-.game-back {
-  display: block;
-  margin: 18px auto 0;
-  border: none;
-  background: transparent;
-  color: #aaa5ba;
-  cursor: pointer;
-  font-size: 11px;
+.game-primary:active {
+  transform: translateY(0);
 }
 
-.game-back:hover {
-  color: #f7bc55;
-}
-
-.handoff-card,
-.result-card {
-  text-align: center;
-  max-width: 520px;
-  margin: 0 auto;
-  padding: 42px 32px;
-}
-
-.handoff-icon {
-  font-size: 43px;
-  margin-bottom: 22px;
-}
-
-.handoff-player {
-  display: inline-block;
-  padding: 12px 25px;
-  border-radius: 10px;
-  background: #f7bc5518;
-  color: #f7bc55;
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 24px;
-  font-weight: 700;
-  margin: 10px 0;
-}
-
-.handoff-card > p {
-  max-width: 330px;
-  margin: 12px auto 0;
-}
-
-.turn-counter {
-  margin-top: 23px;
-  color: #777286;
-  font-size: 9px;
-  letter-spacing: 1.5px;
-  font-weight: 800;
-}
-
-.action-card {
-  max-width: 520px;
-  margin: 0 auto;
-}
-
-.role-display {
-  text-align: center;
-  padding: 27px 15px;
-  margin: 22px 0;
-  border-radius: 12px;
-  background: #ffffff08;
-  border: 1px solid #ffffff12;
-}
-
-.role-display.mafia {
-  background: #e05a6615;
-  border-color: #e05a6640;
-}
-
-.role-display.town {
-  background: #638eea12;
-  border-color: #638eea35;
-}
-
-.role-display-icon {
-  font-size: 45px;
-}
-
-.role-display h1 {
-  font-family: 'Space Grotesk', sans-serif;
-  font-size: 29px;
-  margin: 8px 0;
-}
-
-.role-display.mafia h1 { color: #f27883; }
-.role-display.town h1 { color: #9db5ff; }
-
-.role-display > span {
-  font-size: 9px;
-  font-weight: 800;
-  letter-spacing: 1.5px;
-  color: #aaa5ba;
-}
-
-.role-display p {
-  max-width: 320px;
-  margin: 13px auto 0;
-  color: #aaa5ba;
-  font-size: 12px;
-  line-height: 1.7;
-}
-
-.teammates {
-  padding: 13px;
-  margin-bottom: 20px;
-  background: #e05a6615;
-  border-radius: 9px;
-  border: 1px solid #e05a6630;
-}
-
-.teammates strong {
-  font-size: 11px;
-  color: #f27883;
-}
-
-.teammates p {
-  font-size: 12px;
-  color: #ddd5e5;
-  margin-bottom: 0;
-}
-
-.action-instruction {
-  margin: 25px 0 16px;
-}
-
-.action-instruction h2,
-.no-action h2 {
-  font-size: 16px;
-  margin-bottom: 6px;
-}
-
-.action-instruction p,
-.no-action p {
-  color: #aaa5ba;
-  font-size: 12px;
-  line-height: 1.6;
-}
-
-.target-list {
+/* Discussion Timer Box */
+.timer-display-box {
+  background: rgba(15, 23, 42, 0.7);
+  border: 2px solid rgba(247, 188, 85, 0.3);
+  border-radius: 16px;
+  padding: 20px;
+  margin: 15px 0;
   display: flex;
   flex-direction: column;
-  gap: 9px;
-  margin-top: 15px;
-}
-
-.target-option {
-  display: flex;
   align-items: center;
-  justify-content: space-between;
-  padding: 15px;
-  border: 1px solid #ffffff18;
-  border-radius: 9px;
-  background: #ffffff08;
-  color: #f8f5ff;
-  cursor: pointer;
-  font-size: 12px;
-  text-align: left;
-  transition: 0.15s;
+  gap: 4px;
 }
 
-.target-option:hover {
-  border-color: #f7bc5580;
+.timer-clock-icon {
+  font-size: 2.2rem;
+  animation: pulseIcon 1.5s infinite ease-in-out;
 }
 
-.target-option.selected {
-  border-color: #f7bc55;
-  background: #f7bc5515;
+.timer-countdown {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 3.2rem;
+  font-weight: 800;
   color: #f7bc55;
+  letter-spacing: -1px;
 }
 
-.target-option.abstain {
-  color: #aaa5ba;
-}
-
-.no-action {
-  text-align: center;
-  margin: 30px 0;
-  padding: 20px;
-  border-radius: 10px;
-  background: #ffffff08;
-}
-
-.game-error {
-  text-align: center;
-  color: #ff858b;
-  font-size: 12px;
-  margin-top: 16px;
-}
-
-.private-result {
-  border-color: #638eea55;
-}
-
-.investigation-target {
-  margin: 25px 0 12px;
-  font-size: 22px;
+.timer-label {
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: #94a3b8;
   font-weight: 700;
 }
 
-.investigation-answer {
-  display: inline-block;
-  padding: 12px 28px;
+.timer-controls {
+  display: flex;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 10px;
+}
+
+.timer-toggle-btn, .timer-add-btn {
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  color: #fff;
+  padding: 8px 14px;
   border-radius: 8px;
-  font-size: 14px;
-  font-weight: 900;
-  letter-spacing: 1.5px;
+  font-size: 0.82rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s;
 }
 
-.investigation-answer.danger {
-  color: #ff858b;
-  background: #e05a6620;
+.timer-toggle-btn:hover, .timer-add-btn:hover {
+  background: rgba(255, 255, 255, 0.15);
 }
 
-.investigation-answer.safe {
-  color: #70df9d;
-  background: #70df9d20;
-}
-
-.result-card > p {
-  max-width: 350px;
-  margin: 20px auto;
+/* Error & Notifications */
+.game-error {
+  background: rgba(239, 68, 68, 0.15);
+  border: 1px solid rgba(239, 68, 68, 0.4);
+  color: #fca5a5;
+  padding: 10px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  margin-top: 10px;
 }
 
 .elimination-list {
-  margin: 25px 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
+  margin: 15px 0;
 }
 
 .elimination-item {
-  display: flex;
-  align-items: center;
+  background: rgba(239, 68, 68, 0.08);
+  border: 1px solid rgba(239, 68, 68, 0.25);
+  padding: 14px;
+  border-radius: 12px;
   text-align: left;
-  gap: 15px;
-  padding: 17px;
-  background: #e05a6612;
-  border: 1px solid #e05a6630;
-  border-radius: 10px;
 }
 
-.elimination-icon {
-  font-size: 25px;
-}
-
-.elimination-item strong {
-  font-size: 13px;
+.elimination-item h2 {
+  margin: 0 0 4px;
+  font-size: 1.1rem;
+  color: #fca5a5;
 }
 
 .elimination-item p {
-  color: #aaa5ba;
-  font-size: 11px;
-  margin: 5px 0 0;
+  margin: 0 0 6px;
+  font-size: 0.85rem;
+  color: #c0bbcc;
 }
 
 .no-elimination {
-  padding: 25px 10px;
-  margin: 25px 0;
-  background: #70df9d10;
-  border-radius: 10px;
-}
-
-.no-elimination > span {
-  font-size: 32px;
-}
-
-.no-elimination h2 {
-  font-size: 16px;
-}
-
-.no-elimination p {
-  font-size: 11px;
-  color: #aaa5ba;
-}
-
-.voting-description {
-  font-size: 12px;
-  color: #aaa5ba;
-  line-height: 1.7;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  padding: 18px;
+  border-radius: 12px;
+  font-size: 0.9rem;
+  color: #c0bbcc;
+  margin: 15px 0;
 }
 
 .winner-icon {
-  font-size: 65px;
-  margin: 20px;
-}
-
-.game-over h1 {
-  color: #f7bc55;
+  font-size: 4rem;
+  margin-bottom: 10px;
+  animation: bounceWinner 1s infinite alternate;
 }
 
 .final-players {
-  margin-top: 25px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
+  max-height: 180px;
+  overflow-y: auto;
+  margin: 15px 0;
   text-align: left;
 }
 
 .final-player {
-  display: grid;
-  grid-template-columns: 1fr 1fr auto;
+  display: flex;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  padding: 13px;
-  background: #ffffff08;
+  background: rgba(255, 255, 255, 0.04);
+  padding: 10px 14px;
   border-radius: 8px;
-  font-size: 11px;
+  font-size: 0.85rem;
 }
 
-.final-player strong {
-  color: #f7bc55;
+.status-alive { color: #4ade80; font-weight: 700; }
+.status-dead { color: #f87171; font-weight: 700; }
+
+/* Animations */
+@keyframes partyPop {
+  0% { opacity: 0; transform: scale(0.95) translateY(10px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); }
 }
 
-.final-player small {
-  font-size: 8px;
-  color: #70df9d;
-  letter-spacing: 0.5px;
+@keyframes seriousFadeIn {
+  0% { opacity: 0; transform: scale(0.98); }
+  100% { opacity: 1; transform: scale(1); }
 }
 
-.final-player.dead {
-  opacity: 0.5;
+@keyframes pulseIcon {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
 }
 
-.final-player.dead small {
-  color: #ff858b;
+@keyframes bounceWinner {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-8px); }
 }
 
-@media (max-width: 500px) {
-  .game-navbar { padding: 0 5%; }
-  .game-container { margin-top: 30px; }
-  .registration-card,
-  .action-card,
-  .result-card,
-  .handoff-card { padding: 22px 17px; }
+@media (max-width: 480px) {
+  .game-navbar { padding: 0 4%; }
+  .handoff-card, .action-card, .game-layout, .private-result, .game-over {
+    padding: 22px 16px;
+  }
+}
 
-  .final-player {
-    grid-template-columns: 1fr 1fr;
+/* DAYTIME VISUAL REFRESH */
+/* =========================================
+   DAYTIME VISUAL REFRESH
+   Morning, discussion, voting and results
+========================================= */
+
+.game-page.daytime-page-bg {
+  background: radial-gradient(
+    ellipse at 50% 0%,
+    #fff9e9 0%,
+    #f8edcf 55%,
+    #eee1c1 100%
+  ) !important;
+  color: #292b35 !important;
+}
+
+.game-page.daytime-page-bg .game-navbar {
+  background: rgba(255, 250, 237, 0.92);
+  border-bottom: 1px solid #e8dcc2;
+  backdrop-filter: blur(12px);
+}
+
+.game-page.daytime-page-bg .game-round {
+  background: #f5e8c9;
+  color: #95631e;
+}
+
+.game-page.daytime-page-bg .game-status {
+  color: #77716a;
+}
+
+.game-container {
+  width: min(560px, 92%);
+  margin: 55px auto 40px;
+  box-sizing: border-box;
+}
+
+.game-layout.daytime-layout,
+.handoff-card.daytime-layout {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 34px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.94) !important;
+  color: #292b35 !important;
+  border: 1px solid #eadfc9 !important;
+  box-shadow:
+    0 12px 35px rgba(91, 70, 35, 0.09),
+    0 2px 8px rgba(91, 70, 35, 0.04) !important;
+  text-align: left;
+  animation: partyPop 0.35s ease-out both;
+}
+
+.daytime-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  color: #b7791f !important;
+  font-size: 0.72rem;
+  font-weight: 800;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 22px;
+}
+
+.daytime-heading {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.65rem, 4vw, 2.1rem);
+  line-height: 1.2;
+  letter-spacing: -0.8px;
+  color: #252a35 !important;
+  margin: 0 0 14px;
+  word-break: normal;
+}
+
+.daytime-desc {
+  color: #77716a !important;
+  font-size: 0.95rem;
+  line-height: 1.6;
+}
+
+.daytime-elimination {
+  margin: 24px 0 18px;
+  padding: 20px;
+  background: #fff5f3 !important;
+  border: 1px solid #f2d5cf !important;
+  border-radius: 15px;
+  color: #8f3933 !important;
+}
+
+.daytime-elimination h2 {
+  color: #c34b42 !important;
+  font-size: 1.05rem;
+  margin: 0 0 6px;
+}
+
+.daytime-elimination p {
+  color: #80534e !important;
+  font-size: 0.9rem;
+  line-height: 1.5;
+  margin: 0 0 8px;
+}
+
+.daytime-box {
+  padding: 16px;
+  border-radius: 12px;
+  margin: 16px 0;
+  background: #f0f7ed !important;
+  border: 1px solid #d7e8d0 !important;
+  color: #38613c !important;
+}
+
+.daytime-banner {
+  padding: 16px;
+  border-radius: 12px;
+  background: #f0f7ed !important;
+  border: 1px solid #d7e8d0 !important;
+  color: #38613c !important;
+  font-weight: 600;
+  line-height: 1.5;
+}
+
+.daytime-btn {
+  width: 100%;
+  min-height: 52px;
+  margin-top: 10px;
+  padding: 14px 20px;
+  border: none;
+  border-radius: 12px;
+  background: #a66b24 !important;
+  color: #fff !important;
+  font-size: 0.95rem;
+  font-weight: 800;
+  letter-spacing: 0.2px;
+  box-shadow: 0 4px 12px rgba(166, 107, 36, 0.18) !important;
+  transition: all 0.2s ease;
+}
+
+.daytime-btn:hover {
+  background: #89551b !important;
+  transform: translateY(-2px);
+}
+
+.daytime-timer-box {
+  padding: 24px;
+  border-radius: 16px;
+  background: #fff9e8 !important;
+  border: 1px solid #ead9ae !important;
+  color: #76511d !important;
+}
+
+.daytime-timer-box .timer-countdown {
+  color: #a66b24;
+}
+
+.daytime-sub-btn {
+  background: #f7eedb !important;
+  color: #76511d !important;
+  border: 1px solid #ead9ae !important;
+  border-radius: 9px;
+}
+
+.daytime-sub-btn:hover {
+  background: #efe1c1 !important;
+}
+
+/* Daytime voting handoff */
+.voting-handoff {
+  text-align: left;
+}
+
+.daytime-player {
+  background: #faf5e9 !important;
+  color: #39342d !important;
+  border: 1px solid #e9ddc5 !important;
+  border-radius: 13px;
+  margin: 22px 0 14px;
+}
+
+.daytime-counter {
+  color: #a17b43 !important;
+  text-align: center;
+}
+
+/* Private ballot instructions */
+.voting-instructions {
+  display: flex;
+  align-items: flex-start;
+  gap: 13px;
+  padding: 17px;
+  margin: 22px 0;
+  background: #f8f4e9;
+  border: 1px solid #e9dfca;
+  border-radius: 13px;
+  color: #514632;
+  text-align: left;
+}
+
+.voting-instructions > span {
+  font-size: 1.5rem;
+}
+
+.voting-instructions strong {
+  display: block;
+  font-size: 0.9rem;
+  margin-bottom: 5px;
+  color: #725322;
+}
+
+.voting-instructions p {
+  margin: 0;
+  font-size: 0.82rem;
+  line-height: 1.5;
+  color: #807665;
+}
+
+/* Daytime player selection */
+.daytime-target-list {
+  max-height: 320px;
+  margin: 15px 0;
+  padding-right: 3px;
+}
+
+.daytime-target {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 15px 17px;
+  background: #faf8f2 !important;
+  border: 1px solid #e8e0d1 !important;
+  border-radius: 11px;
+  color: #37352f !important;
+  font-size: 0.95rem;
+  font-weight: 650;
+  transition: all 0.18s ease;
+}
+
+.daytime-target:hover {
+  background: #f5eedf !important;
+  border-color: #d6bd8e !important;
+  transform: translateX(2px);
+}
+
+.daytime-target.selected {
+  background: #fff5df !important;
+  border: 1px solid #c18a36 !important;
+  color: #875719 !important;
+  box-shadow: 0 2px 8px rgba(166, 107, 36, 0.08);
+}
+
+.vote-selection-indicator {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 23px;
+  height: 23px;
+  border-radius: 50%;
+  background: #eee8db;
+  color: #fff;
+  font-size: 0.8rem;
+}
+
+.daytime-target.selected .vote-selection-indicator {
+  background: #a66b24;
+}
+
+/* Abstain option */
+.daytime-abstain {
+  width: 100%;
+  padding: 13px;
+  background: #f4f1e9 !important;
+  border: 1px dashed #d7cbb5 !important;
+  border-radius: 11px;
+  color: #777064 !important;
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.daytime-abstain:hover {
+  background: #eee8dc !important;
+}
+
+.daytime-abstain.selected {
+  background: #eae5d9 !important;
+  border: 1px solid #a99b7e !important;
+  color: #514632 !important;
+}
+
+.game-page.daytime-page-bg .game-error {
+  background: #fff1ef;
+  border: 1px solid #f2c5bd;
+  color: #b33b32;
+}
+
+@media (max-width: 600px) {
+  .game-container {
+    width: 92%;
+    margin: 30px auto;
   }
 
-  .final-player small {
-    grid-column: 1 / -1;
+  .game-layout.daytime-layout,
+  .handoff-card.daytime-layout {
+    padding: 24px 19px;
+    border-radius: 17px;
+  }
+
+  .daytime-heading {
+    font-size: 1.65rem;
+  }
+
+  .daytime-elimination {
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .voting-instructions {
+    padding: 14px;
+  }
+
+  .daytime-target {
+    padding: 13px;
+  }
+
+  .daytime-target-list {
+    max-height: 280px;
   }
 }

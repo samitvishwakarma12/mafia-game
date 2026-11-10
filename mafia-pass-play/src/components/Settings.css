@@ -1,117 +1,113 @@
-
 .settings-page {
   min-height: 100vh;
-  padding: 40px 20px 60px;
-  background: linear-gradient(145deg, #171329, #242044);
-  color: white;
+  padding: 35px 16px 50px;
+  background: linear-gradient(145deg, #151321, #291c3d);
 }
 
 .settings-container {
-  max-width: 700px;
+  max-width: 680px;
   margin: 0 auto;
 }
 
 .settings-back {
   background: none;
   border: none;
-  color: #b8b3d5;
-  font: inherit;
+  color: #a39eb8;
+  font-size: 0.85rem;
+  font-weight: 700;
   cursor: pointer;
-  margin-bottom: 38px;
+  margin-bottom: 25px;
 }
 
+.settings-back:hover { color: #fff; }
+
 .settings-heading {
-  margin-bottom: 35px;
+  margin-bottom: 25px;
 }
 
 .settings-eyebrow {
-  color: #a99cf5;
-  font-size: 0.75rem;
+  color: #f7bc55;
+  font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 2px;
 }
 
 .settings-heading h1 {
-  font-size: clamp(2rem, 6vw, 3rem);
-  margin: 12px 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  margin: 10px 0;
 }
 
 .settings-heading p,
 .settings-section > p {
   color: #b9b5cc;
+  font-size: 0.9rem;
   line-height: 1.6;
 }
 
 .settings-section {
-  margin-bottom: 30px;
-  padding: 22px;
-  background: rgba(255, 255, 255, 0.055);
-  border: 1px solid rgba(255, 255, 255, 0.09);
+  margin-bottom: 20px;
+  padding: 20px;
+  background: rgba(36, 29, 56, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 16px;
 }
 
 .settings-section h3 {
-  margin: 0 0 8px;
-  font-size: 1.05rem;
+  margin: 0 0 6px;
+  font-size: 1rem;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .settings-section > p {
-  margin: 0 0 18px;
-  font-size: 0.9rem;
+  margin: 0 0 14px;
 }
-
-/* Player count */
 
 .settings-section input[type="number"] {
   width: 100%;
   box-sizing: border-box;
   padding: 12px;
   border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 9px;
-  background: rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  background: rgba(255, 255, 255, 0.05);
   color: white;
-  font: inherit;
+  font-size: 1rem;
 }
 
-.settings-section input:focus {
-  outline: 2px solid #8b7cf6;
-  outline-offset: 2px;
+.settings-section input:focus,
+.player-name-field input:focus,
+.role-limit-row input:focus {
+  outline: none;
+  border-color: #f7bc55;
+  background: rgba(247, 188, 85, 0.05);
 }
-
-/* Player identity */
 
 .identity-options {
   display: flex;
   gap: 10px;
-  margin: 16px 0;
+  margin-bottom: 10px;
 }
 
 .identity-option {
   flex: 1;
   padding: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
-  background: transparent;
-  color: #d8d4e8;
-  font: inherit;
+  background: rgba(255, 255, 255, 0.03);
+  color: #c0bbcc;
+  font-weight: 600;
   cursor: pointer;
-  transition: 0.2s;
-}
-
-.identity-option:hover {
-  background: rgba(255, 255, 255, 0.06);
+  transition: 0.15s;
 }
 
 .identity-option.active {
-  border-color: #8b7cf6;
-  background: rgba(139, 124, 246, 0.15);
-  color: white;
+  border-color: #f7bc55;
+  background: rgba(247, 188, 85, 0.15);
+  color: #f7bc55;
 }
 
-/* Collapsible player names */
-
 .player-names-section {
-  margin-top: 18px;
+  margin-top: 14px;
 }
 
 .names-toggle {
@@ -119,70 +115,66 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
-  padding: 14px;
+  padding: 12px 14px;
   border: none;
   border-radius: 10px;
-  background: rgba(255, 255, 255, 0.07);
+  background: rgba(255, 255, 255, 0.06);
   color: white;
-  font: inherit;
+  font-weight: 600;
   cursor: pointer;
 }
 
 .names-toggle span:last-child {
-  color: #a99cf5;
-  font-size: 0.82rem;
+  color: #f7bc55;
+  font-size: 0.8rem;
 }
 
 .player-name-fields {
   display: grid;
-  gap: 12px;
-  margin-top: 14px;
+  gap: 10px;
+  margin-top: 12px;
+  max-height: 220px;
+  overflow-y: auto;
+  padding-right: 4px;
 }
 
 .player-name-field {
   display: grid;
-  gap: 6px;
-  color: #c9c4db;
-  font-size: 0.85rem;
+  gap: 4px;
+  color: #a39eb8;
+  font-size: 0.8rem;
+  font-weight: 700;
 }
 
 .player-name-field input {
   width: 100%;
   box-sizing: border-box;
-  padding: 12px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 9px;
-  background: rgba(255, 255, 255, 0.06);
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.04);
   color: white;
-  font: inherit;
+  font-size: 0.9rem;
 }
-
-.player-name-field input::placeholder {
-  color: #85809c;
-}
-
-/* Role assignment */
 
 .assignment-options {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  gap: 12px;
+  gap: 10px;
 }
 
 .assignment-option {
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
-  gap: 8px;
-  padding: 16px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  gap: 6px;
+  padding: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 12px;
-  background: transparent;
+  background: rgba(255, 255, 255, 0.03);
   color: white;
   text-align: left;
   cursor: pointer;
-  transition: 0.2s;
+  transition: 0.15s;
 }
 
 .assignment-option strong {
@@ -190,114 +182,92 @@
 }
 
 .assignment-option span {
-  color: #aaa5bf;
-  font-size: 0.82rem;
+  color: #a39eb8;
+  font-size: 0.75rem;
   line-height: 1.4;
 }
 
-.assignment-option:hover {
-  background: rgba(255, 255, 255, 0.05);
-}
-
 .assignment-option.active {
-  border-color: #8b7cf6;
-  background: rgba(139, 124, 246, 0.13);
+  border-color: #f7bc55;
+  background: rgba(247, 188, 85, 0.12);
 }
-
-/* Manual role limits */
 
 .role-limits {
-  margin-top: 22px;
-  padding-top: 18px;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  margin-top: 18px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
 .role-limits > p {
-  color: #aaa5bf;
-  font-size: 0.85rem;
-  margin-bottom: 18px;
+  color: #a39eb8;
+  font-size: 0.8rem;
+  margin-bottom: 14px;
 }
 
 .role-limit-row {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   align-items: center;
-  gap: 12px;
-  margin-bottom: 14px;
+  gap: 10px;
+  margin-bottom: 12px;
 }
 
 .role-limit-row > strong {
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 .role-limit-row label {
   display: flex;
   flex-direction: column;
-  gap: 6px;
-  color: #aaa5bf;
-  font-size: 0.78rem;
+  gap: 4px;
+  color: #a39eb8;
+  font-size: 0.75rem;
+  font-weight: 700;
 }
 
 .role-limit-row input {
   width: 100%;
   box-sizing: border-box;
-  padding: 9px;
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(255, 255, 255, 0.04);
   color: white;
-  font: inherit;
+  font-size: 0.9rem;
 }
-
-/* Error message */
 
 .settings-error {
-  padding: 13px 16px;
-  margin-bottom: 18px;
-  border: 1px solid rgba(248, 113, 113, 0.3);
+  padding: 12px 14px;
+  margin-bottom: 16px;
+  border: 1px solid rgba(239, 68, 68, 0.4);
   border-radius: 10px;
-  background: rgba(239, 68, 68, 0.1);
+  background: rgba(239, 68, 68, 0.12);
   color: #fca5a5;
-  font-size: 0.88rem;
-  line-height: 1.5;
+  font-size: 0.85rem;
+  font-weight: 600;
 }
-
-/* Continue button */
 
 .settings-continue {
   width: 100%;
-  padding: 16px;
+  padding: 15px;
   border: none;
   border-radius: 12px;
-  background: #8b7cf6;
-  color: white;
-  font-size: 1rem;
-  font-weight: 700;
+  background: #f7bc55;
+  color: #151321;
+  font-size: 0.95rem;
+  font-weight: 800;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 4px 15px rgba(247, 188, 85, 0.3);
+  transition: transform 0.15s, background 0.15s;
 }
 
 .settings-continue:hover {
-  background: #7665ed;
+  background: #ffd17b;
   transform: translateY(-2px);
 }
 
-/* Responsive layout */
-
 @media (max-width: 500px) {
-  .settings-page {
-    padding: 25px 16px 40px;
-  }
-
-  .settings-section {
-    padding: 17px;
-  }
-
   .assignment-options {
     grid-template-columns: 1fr;
-  }
-
-  .role-limit-row {
-    gap: 8px;
   }
 }

@@ -1,127 +1,121 @@
-
 .rules-page {
   min-height: 100vh;
-  padding: 40px 20px 60px;
-  background: linear-gradient(145deg, #171329, #242044);
-  color: white;
+  padding: 35px 16px 50px;
+  background: linear-gradient(145deg, #151321, #291c3d);
 }
 
 .rules-container {
-  max-width: 760px;
+  max-width: 680px;
   margin: 0 auto;
 }
 
 .rules-back {
   background: none;
   border: none;
-  color: #b8b3d5;
-  font: inherit;
+  color: #a39eb8;
+  font-size: 0.85rem;
+  font-weight: 700;
   cursor: pointer;
-  margin-bottom: 38px;
+  margin-bottom: 25px;
 }
 
+.rules-back:hover { color: #fff; }
+
 .rules-heading {
-  margin-bottom: 32px;
+  margin-bottom: 25px;
 }
 
 .rules-eyebrow {
-  color: #a99cf5;
-  font-size: 0.75rem;
+  color: #f7bc55;
+  font-size: 0.7rem;
   font-weight: 800;
   letter-spacing: 2px;
 }
 
 .rules-heading h1 {
-  font-size: clamp(2rem, 6vw, 3.2rem);
-  margin: 12px 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.8rem, 5vw, 2.8rem);
+  margin: 10px 0;
 }
 
 .rules-heading p {
   color: #b9b5cc;
+  font-size: 0.95rem;
   line-height: 1.6;
 }
 
 .rules-list {
   display: grid;
-  gap: 12px;
+  gap: 10px;
 }
 
 .rule-card {
   display: flex;
   align-items: flex-start;
-  gap: 18px;
-  padding: 20px;
-  background: rgba(255, 255, 255, 0.055);
-  border: 1px solid rgba(255, 255, 255, 0.09);
-  border-radius: 16px;
+  gap: 15px;
+  padding: 16px;
+  background: rgba(36, 29, 56, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
 }
 
 .rule-icon {
-  width: 46px;
-  height: 46px;
+  width: 42px;
+  height: 42px;
   flex-shrink: 0;
   display: grid;
   place-items: center;
-  background: rgba(169, 156, 245, 0.12);
-  border-radius: 12px;
-  font-size: 1.4rem;
+  background: rgba(247, 188, 85, 0.1);
+  border-radius: 10px;
+  font-size: 1.2rem;
 }
 
 .rule-number {
-  color: #a99cf5;
-  font-size: 0.68rem;
+  color: #f7bc55;
+  font-size: 0.65rem;
   font-weight: 800;
   letter-spacing: 1.5px;
 }
 
 .rule-content h3 {
-  margin: 5px 0 7px;
-  font-size: 1rem;
+  margin: 4px 0 5px;
+  font-size: 0.95rem;
+  font-family: 'Space Grotesk', sans-serif;
 }
 
 .rule-content p {
   color: #b9b5cc;
-  font-size: 0.9rem;
-  line-height: 1.55;
+  font-size: 0.85rem;
+  line-height: 1.5;
   margin: 0;
 }
 
 .rules-footer {
-  margin-top: 30px;
+  margin-top: 25px;
   text-align: center;
 }
 
 .rules-footer p {
   color: #b9b5cc;
   font-size: 0.85rem;
-  margin-bottom: 15px;
+  margin-bottom: 12px;
 }
 
 .rules-continue {
   width: 100%;
-  padding: 16px;
+  padding: 15px;
   border: none;
   border-radius: 12px;
-  background: #8b7cf6;
-  color: white;
-  font-size: 1rem;
-  font-weight: 700;
+  background: #f7bc55;
+  color: #151321;
+  font-size: 0.95rem;
+  font-weight: 800;
   cursor: pointer;
-  transition: background 0.2s, transform 0.2s;
+  box-shadow: 0 4px 15px rgba(247, 188, 85, 0.3);
+  transition: transform 0.15s, background 0.15s;
 }
 
 .rules-continue:hover {
-  background: #7665ed;
+  background: #ffd17b;
   transform: translateY(-2px);
-}
-
-@media (max-width: 500px) {
-  .rules-page {
-    padding: 25px 16px 40px;
-  }
-
-  .rule-card {
-    padding: 16px;
-    gap: 13px;
-  }
 }
