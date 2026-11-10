@@ -5,7 +5,7 @@ import "./Settings.css";
 const ROLE_CONFIG = [
   { id: "mafia", name: "Mafia", min: 1 },
   { id: "doctor", name: "Doctor", min: 0 },
-  { id: "police", name: "police", min: 0 },
+  { id: "police", name: "Police", min: 0 },
   { id: "villager", name: "Villager", min: 0 }
 ];
 
