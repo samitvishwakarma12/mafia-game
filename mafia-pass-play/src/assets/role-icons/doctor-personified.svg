@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Doctor">
+  <title>Doctor (personified)</title>
+  <defs>
+    <clipPath id="dp-clip"><circle cx="128" cy="128" r="120"/></clipPath>
+  </defs>
+  <style>
+    .dp-bob { animation: dp-bob 3.6s ease-in-out infinite; }
+    .dp-steth { transform-origin: 128px 196px; animation: dp-steth 4s ease-in-out infinite; }
+    .dp-cross { transform-origin: 167px 209px; animation: dp-cross 3.2s ease-in-out infinite; }
+    @keyframes dp-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+    @keyframes dp-steth { 0%,100% { transform: rotate(-3deg); } 50% { transform: rotate(3deg); } }
+    @keyframes dp-cross { 0%,60%,100% { transform: scale(1); } 80% { transform: scale(1.18); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+
+  <circle cx="128" cy="128" r="120" fill="#DDF0ED"/>
+  <g clip-path="url(#dp-clip)">
+    <g class="dp-bob">
+      <!-- white coat -->
+      <path d="M40 270 C40 196 78 154 128 150 C178 154 216 196 216 270 Z" fill="#F5F8FA" stroke="#B9C7CF" stroke-width="3"/>
+      <!-- neck + head (no facial detail) -->
+      <rect x="115" y="118" width="26" height="40" rx="8" fill="#D2A57D"/>
+      <circle cx="128" cy="96" r="32" fill="#E3B98F"/>
+      <!-- scrubs + lapels -->
+      <path d="M110 150 L146 150 L128 192 Z" fill="#2A9D8F"/>
+      <path d="M92 162 L112 150 L128 192 L112 246 L84 246 Z" fill="#E3EBEF" stroke="#CBD6DC" stroke-width="2" stroke-linejoin="round"/>
+      <path d="M164 162 L144 150 L128 192 L144 246 L172 246 Z" fill="#E3EBEF" stroke="#CBD6DC" stroke-width="2" stroke-linejoin="round"/>
+      <!-- chest pocket with cross -->
+      <rect x="152" y="196" width="30" height="28" rx="4" fill="#F5F8FA" stroke="#CBD6DC" stroke-width="2"/>
+      <g class="dp-cross" fill="#2A9D8F">
+        <rect x="165" y="203" width="4" height="12" rx="1"/>
+        <rect x="161" y="207" width="12" height="4" rx="1"/>
+      </g>
+      <!-- stethoscope -->
+      <path d="M114 148 C108 188 128 196 128 196 C128 196 148 188 142 148" fill="none" stroke="#3A4A55" stroke-width="4" stroke-linecap="round"/>
+      <g class="dp-steth">
+        <path d="M128 196 L128 214" stroke="#3A4A55" stroke-width="4" stroke-linecap="round"/>
+        <circle cx="128" cy="222" r="8" fill="#9FB0BA" stroke="#3A4A55" stroke-width="3"/>
+      </g>
+      <!-- surgical cap -->
+      <path d="M94 84 C92 52 108 44 128 44 C148 44 164 52 162 84 Q128 70 94 84 Z" fill="#2A9D8F"/>
+      <path d="M94 84 Q128 70 162 84" fill="none" stroke="#1F7A70" stroke-width="3" stroke-linecap="round"/>
+    </g>
+  </g>
+</svg>

@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Villager">
+  <title>Villager (personified)</title>
+  <defs>
+    <clipPath id="vp-clip"><circle cx="128" cy="128" r="120"/></clipPath>
+  </defs>
+  <style>
+    .vp-bob { animation: vp-bob 3.6s ease-in-out infinite; }
+    .vp-hat { transform-origin: 128px 76px; animation: vp-hat 5.5s ease-in-out infinite; }
+    @keyframes vp-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+    @keyframes vp-hat { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(2deg); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+
+  <circle cx="128" cy="128" r="120" fill="#E5EEDA"/>
+  <g clip-path="url(#vp-clip)">
+    <g class="vp-bob">
+      <!-- tunic -->
+      <path d="M40 270 C40 196 78 154 128 150 C178 154 216 196 216 270 Z" fill="#8A6B45"/>
+      <!-- satchel strap -->
+      <path d="M84 166 L198 264" stroke="#5C4326" stroke-width="12" fill="none"/>
+      <!-- neck + head (no facial detail) -->
+      <rect x="115" y="118" width="26" height="40" rx="8" fill="#D2A57D"/>
+      <circle cx="128" cy="96" r="32" fill="#E3B98F"/>
+      <!-- laced collar -->
+      <path d="M110 150 L146 150 L128 186 Z" fill="#EFE3C5"/>
+      <path d="M120 157 L136 161 M121 165 L135 169 M123 173 L133 177" stroke="#8A6B45" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+      <!-- shadow under hat brim -->
+      <ellipse cx="128" cy="88" rx="34" ry="7" fill="#000" opacity="0.12"/>
+      <!-- straw hat -->
+      <g class="vp-hat">
+        <ellipse cx="128" cy="74" rx="64" ry="12" fill="#E2B84F"/>
+        <path d="M70 74 Q128 84 186 74" stroke="#C79B3A" stroke-width="2" fill="none" stroke-linecap="round"/>
+        <path d="M98 74 C98 48 112 38 128 38 C144 38 158 48 158 74 Z" fill="#EBC964"/>
+        <rect x="98" y="62" width="60" height="9" fill="#8C5A2B"/>
+      </g>
+    </g>
+  </g>
+</svg>

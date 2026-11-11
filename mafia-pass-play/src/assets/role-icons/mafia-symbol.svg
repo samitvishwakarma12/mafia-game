@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Fedora and smoking gun">
+  <title>Mafia (symbol)</title>
+  <style>
+    .ms-hat { transform-origin: 128px 160px; animation: ms-tip 5s ease-in-out infinite; }
+    .ms-smoke { transform-box: fill-box; transform-origin: center; opacity: 0; animation: ms-smoke 3.6s ease-out infinite; }
+    .ms-smoke.b { animation-delay: 1.2s; }
+    .ms-smoke.c { animation-delay: 2.4s; }
+    @keyframes ms-tip { 0%,60%,100% { transform: rotate(0deg); } 75% { transform: rotate(-5deg); } 88% { transform: rotate(0deg); } }
+    @keyframes ms-smoke {
+      0%   { transform: translate(0,0) scale(0.5); opacity: 0; }
+      20%  { opacity: 0.75; }
+      100% { transform: translate(14px,-46px) scale(1.6); opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      * { animation: none !important; }
+      .ms-smoke { opacity: 0.5; }
+    }
+  </style>
+
+  <circle cx="128" cy="128" r="120" fill="#E6E2EA"/>
+
+  <!-- fedora (same design as before, scaled down and moved up-left) -->
+  <g transform="translate(22 12) scale(0.75)">
+    <g class="ms-hat">
+      <ellipse cx="128" cy="146" rx="82" ry="20" fill="#121217"/>
+      <path d="M82 146 C82 92 100 68 128 68 C156 68 174 92 174 146 Q128 164 82 146 Z" fill="#1D1D24"/>
+      <path d="M106 76 Q128 92 150 76" fill="none" stroke="#0E0E12" stroke-width="4" stroke-linecap="round"/>
+      <path d="M82.4 126 Q128 144 173.6 126 L174 146 Q128 164 82 146 Z" fill="#B3262E"/>
+    </g>
+  </g>
+
+  <!-- smoking gun -->
+  <g transform="rotate(-12 134 190)">
+    <!-- grip -->
+    <path d="M86 186 H118 L110 228 Q109 232 104 232 H90 Q84 232 85 226 Z" fill="#6B4528"/>
+    <path d="M93 198 L90 224 M99 198 L96 226" stroke="#4B2F1A" stroke-width="2" stroke-linecap="round" fill="none"/>
+    <!-- frame + trigger guard -->
+    <rect x="100" y="186" width="52" height="6" fill="#3A3A45"/>
+    <path d="M122 190 V200 Q122 208 132 208 H142 Q148 208 148 200 V190" fill="none" stroke="#2A2A33" stroke-width="4" stroke-linejoin="round"/>
+    <rect x="133" y="190" width="3" height="10" rx="1.5" fill="#2A2A33"/>
+    <!-- slide + barrel -->
+    <rect x="82" y="166" width="104" height="22" rx="5" fill="#2A2A33"/>
+    <rect x="182" y="170" width="9" height="14" rx="2" fill="#1B1B22"/>
+    <path d="M94 170 V184 M99 170 V184 M104 170 V184" stroke="#4A4A55" stroke-width="2" stroke-linecap="round"/>
+    <path d="M120 172 H168" stroke="#4A4A55" stroke-width="2" stroke-linecap="round"/>
+    <!-- sights -->
+    <rect x="172" y="162" width="6" height="5" rx="1" fill="#2A2A33"/>
+    <rect x="88" y="162" width="8" height="5" rx="1" fill="#2A2A33"/>
+  </g>
+
+  <!-- smoke from the muzzle -->
+  <circle class="ms-smoke"   cx="189" cy="158" r="6" fill="#B3AEBB"/>
+  <circle class="ms-smoke b" cx="189" cy="158" r="6" fill="#B3AEBB"/>
+  <circle class="ms-smoke c" cx="189" cy="158" r="6" fill="#B3AEBB"/>
+</svg>

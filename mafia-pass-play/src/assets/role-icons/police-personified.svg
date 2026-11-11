@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Police officer">
+  <title>Police (personified)</title>
+  <defs>
+    <clipPath id="pp-clip"><circle cx="128" cy="128" r="120"/></clipPath>
+  </defs>
+  <style>
+    .pp-bob { animation: pp-bob 3.6s ease-in-out infinite; }
+    .pp-glint { transform-origin: 166px 202px; animation: pp-glint 4.5s ease-in-out infinite; }
+    @keyframes pp-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+    @keyframes pp-glint { 0%,70%,100% { transform: scale(1); } 85% { transform: scale(1.14); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+
+  <circle cx="128" cy="128" r="120" fill="#DCE6F5"/>
+  <g clip-path="url(#pp-clip)">
+    <g class="pp-bob">
+      <!-- torso -->
+      <path d="M40 270 C40 196 78 154 128 150 C178 154 216 196 216 270 Z" fill="#24457A"/>
+      <!-- neck + head (no facial detail) -->
+      <rect x="115" y="118" width="26" height="40" rx="8" fill="#D2A57D"/>
+      <circle cx="128" cy="96" r="32" fill="#E3B98F"/>
+      <!-- shirt, tie -->
+      <path d="M108 150 L148 150 L128 182 Z" fill="#CBD9EE"/>
+      <path d="M123 172 L133 172 L131 183 L125 183 Z" fill="#12233F"/>
+      <path d="M125 183 L131 183 L134 220 L128 228 L122 220 Z" fill="#12233F"/>
+      <!-- epaulettes -->
+      <rect x="67" y="165" width="34" height="9" rx="3" fill="#D9A93B" transform="rotate(-30 84 170)"/>
+      <rect x="155" y="165" width="34" height="9" rx="3" fill="#D9A93B" transform="rotate(30 172 170)"/>
+      <!-- chest badge -->
+      <g class="pp-glint">
+        <path d="M166 184 L180 189 V202 C180 212 173 218 166 222 C159 218 152 212 152 202 V189 Z" fill="#D9A93B"/>
+        <path d="M166 192 L168.5 199 L176 199 L170 203.5 L172.2 211 L166 206.5 L159.8 211 L162 203.5 L156 199 L163.5 199 Z" fill="#24457A"/>
+      </g>
+      <!-- cap -->
+      <path d="M92 84 C90 54 106 42 128 42 C150 42 166 54 164 84 Z" fill="#1B3563"/>
+      <rect x="91" y="76" width="74" height="11" rx="3" fill="#0F2142"/>
+      <path d="M94 87 Q128 96 162 87 Q160 94 128 99 Q96 94 94 87 Z" fill="#0A1730"/>
+      <circle cx="128" cy="62" r="6" fill="#D9A93B"/>
+    </g>
+  </g>
+</svg>

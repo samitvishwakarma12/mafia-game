@@ -1,0 +1,22 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Medical cross with heartbeat">
+  <title>Doctor (symbol)</title>
+  <style>
+    .ds-cross { transform-origin: 128px 128px; animation: ds-beat 3s ease-in-out infinite; }
+    .ds-ecg { stroke-dasharray: 180; stroke-dashoffset: 180; animation: ds-ecg 3s ease-in-out infinite; }
+    @keyframes ds-beat { 0%,50%,100% { transform: scale(1); } 62% { transform: scale(1.035); } }
+    @keyframes ds-ecg {
+      0% { stroke-dashoffset: 180; opacity: 1; }
+      50% { stroke-dashoffset: 0; opacity: 1; }
+      85% { stroke-dashoffset: 0; opacity: 1; }
+      100% { stroke-dashoffset: 0; opacity: 0; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } .ds-ecg { stroke-dashoffset: 0; } }
+  </style>
+
+  <circle cx="128" cy="128" r="120" fill="#DDF0ED"/>
+  <g class="ds-cross" fill="#2A9D8F">
+    <rect x="106" y="54" width="44" height="148" rx="10"/>
+    <rect x="54" y="106" width="148" height="44" rx="10"/>
+  </g>
+  <path class="ds-ecg" d="M66 128 H114 L122 112 L132 146 L140 122 L146 128 H190" fill="none" stroke="#fff" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>

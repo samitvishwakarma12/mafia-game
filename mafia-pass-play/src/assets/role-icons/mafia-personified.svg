@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 256" width="256" height="256" role="img" aria-label="Mafia member">
+  <title>Mafia (personified)</title>
+  <defs>
+    <clipPath id="mp-clip"><circle cx="128" cy="128" r="120"/></clipPath>
+  </defs>
+  <style>
+    .mp-bob { animation: mp-bob 3.6s ease-in-out infinite; }
+    .mp-hat { transform-origin: 128px 80px; animation: mp-hat 5s ease-in-out infinite; }
+    @keyframes mp-bob { 0%,100% { transform: translateY(0); } 50% { transform: translateY(-3px); } }
+    @keyframes mp-hat { 0%,100% { transform: rotate(0deg); } 50% { transform: rotate(-2deg); } }
+    @media (prefers-reduced-motion: reduce) { * { animation: none !important; } }
+  </style>
+
+  <circle cx="128" cy="128" r="120" fill="#E6E2EA"/>
+  <g clip-path="url(#mp-clip)">
+    <g class="mp-bob">
+      <!-- suit -->
+      <path d="M40 270 C40 196 78 154 128 150 C178 154 216 196 216 270 Z" fill="#2A2A33"/>
+      <!-- neck + head (no facial detail) -->
+      <rect x="115" y="118" width="26" height="40" rx="8" fill="#D2A57D"/>
+      <circle cx="128" cy="96" r="32" fill="#E3B98F"/>
+      <!-- shirt, lapels, tie -->
+      <path d="M110 150 L146 150 L128 214 Z" fill="#F3F3F5"/>
+      <path d="M90 162 L112 150 L128 214 L98 202 Z" fill="#3B3B47"/>
+      <path d="M166 162 L144 150 L128 214 L158 202 Z" fill="#3B3B47"/>
+      <path d="M123 164 L133 164 L131 177 L125 177 Z" fill="#B3262E"/>
+      <path d="M125 177 L131 177 L135 208 L128 218 L121 208 Z" fill="#B3262E"/>
+      <!-- pocket square -->
+      <rect x="156" y="202" width="26" height="3" rx="1.5" fill="#1B1B22"/>
+      <path d="M162 202 L168 193 L174 202 Z" fill="#F3F3F5"/>
+      <!-- shadow under hat brim -->
+      <ellipse cx="128" cy="90" rx="30" ry="7" fill="#000" opacity="0.16"/>
+      <!-- fedora -->
+      <g class="mp-hat">
+        <path d="M96 78 C96 44 108 32 128 32 C148 32 160 44 160 78 Z" fill="#1D1D24"/>
+        <path d="M112 39 Q128 51 144 39" fill="none" stroke="#0E0E12" stroke-width="3" stroke-linecap="round"/>
+        <rect x="96" y="65" width="64" height="11" fill="#B3262E"/>
+        <ellipse cx="128" cy="79" rx="56" ry="11" fill="#121217"/>
+      </g>
+    </g>
+  </g>
+</svg>
