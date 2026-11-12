@@ -1,12 +1,16 @@
-
 import { useState } from "react";
 import "./Settings.css";
 
+import mafiaSymbol from "../assets/role-icons/mafia-symbol.svg";
+import doctorSymbol from "../assets/role-icons/doctor-symbol.svg";
+import policeSymbol from "../assets/role-icons/police-symbol.svg";
+import villagerSymbol from "../assets/role-icons/villager-symbol.svg";
+
 const ROLE_CONFIG = [
-  { id: "mafia", name: "Mafia", min: 1 },
-  { id: "doctor", name: "Doctor", min: 0 },
-  { id: "police", name: "Police", min: 0 },
-  { id: "villager", name: "Villager", min: 0 }
+  { id: "mafia", name: "Mafia", min: 1, icon: mafiaSymbol },
+  { id: "doctor", name: "Doctor", min: 0, icon: doctorSymbol },
+  { id: "police", name: "Police", min: 0, icon: policeSymbol },
+  { id: "villager", name: "Villager", min: 0, icon: villagerSymbol }
 ];
 
 function Settings({ onBack, onContinue }) {
@@ -29,45 +33,59 @@ function Settings({ onBack, onContinue }) {
 
   const [error, setError] = useState("");
 
+  const numericPlayerCount = Number(playerCount) || 0;
+
   const handlePlayerCountChange = (event) => {
-    const count = Math.max(4, Number(event.target.value) || 4);
+    const rawValue = event.target.value;
 
-    setPlayerCount(count);
+    if (rawValue === "") {
+      setPlayerCount("");
+      setError("");
+      return;
+    }
 
-    setPlayerNames((currentNames) =>
-      Array.from(
-        { length: count },
-        (_, index) => currentNames[index] ?? `Player ${index + 1}`
-      )
-    );
+    const parsed = Number(rawValue);
+    if (Number.isNaN(parsed)) return;
 
-    setRoles((currentRoles) => ({
-      ...currentRoles,
-      villager: {
-        ...currentRoles.villager,
-        max: Math.max(currentRoles.villager.max, count)
-      }
-    }));
+    setPlayerCount(rawValue);
+
+    if (parsed >= 1) {
+      setPlayerNames((currentNames) =>
+        Array.from(
+          { length: parsed },
+          (_, index) => currentNames[index] ?? `Player ${index + 1}`
+        )
+      );
+
+      setRoles((currentRoles) => ({
+        ...currentRoles,
+        villager: {
+          ...currentRoles.villager,
+          max:
+            currentRoles.villager.max === ""
+              ? ""
+              : Math.max(Number(currentRoles.villager.max) || 0, parsed)
+        }
+      }));
+    }
 
     setError("");
   };
 
   const handleNameChange = (index, value) => {
     setPlayerNames((currentNames) =>
-      currentNames.map((name, i) =>
-        i === index ? value : name
-      )
+      currentNames.map((name, i) => (i === index ? value : name))
     );
   };
 
   const handleRoleLimitChange = (roleId, field, value) => {
-    const number = Math.max(0, Number(value) || 0);
+    if (value !== "" && Number.isNaN(Number(value))) return;
 
     setRoles((currentRoles) => ({
       ...currentRoles,
       [roleId]: {
         ...currentRoles[roleId],
-        [field]: number
+        [field]: value
       }
     }));
 
@@ -75,73 +93,87 @@ function Settings({ onBack, onContinue }) {
   };
 
   const handleContinue = () => {
-    if (playerCount < 4) {
+    const finalPlayerCount = Number(playerCount);
+
+    if (playerCount === "" || !Number.isInteger(finalPlayerCount) || finalPlayerCount < 4) {
       setError("At least 4 players are required.");
       return;
     }
 
     if (identityMode === "named") {
-      const cleanedNames = playerNames.map((name) => name.trim());
+      const cleanedNames = playerNames
+        .slice(0, finalPlayerCount)
+        .map((name) => name.trim());
 
       if (cleanedNames.some((name) => !name)) {
         setError("Please enter a name for every player.");
         return;
       }
 
-      if (new Set(cleanedNames.map((name) => name.toLowerCase())).size !== cleanedNames.length) {
+      if (
+        new Set(cleanedNames.map((name) => name.toLowerCase())).size !==
+        cleanedNames.length
+      ) {
         setError("Every player must have a unique name.");
         return;
       }
     }
 
-    if (assignment === "manual") {
-      for (const role of ROLE_CONFIG) {
-        const limits = roles[role.id];
+    const parsedRoles = {};
+    for (const role of ROLE_CONFIG) {
+      const rawLimits = roles[role.id];
+      const minVal = rawLimits.min === "" ? NaN : Number(rawLimits.min);
+      const maxVal = rawLimits.max === "" ? NaN : Number(rawLimits.max);
 
+      parsedRoles[role.id] = { min: minVal, max: maxVal };
+
+      if (assignment === "manual") {
         if (
-          !Number.isInteger(limits.min) ||
-          !Number.isInteger(limits.max) ||
-          limits.min < 0 ||
-          limits.max < limits.min
+          !Number.isInteger(minVal) ||
+          !Number.isInteger(maxVal) ||
+          minVal < 0 ||
+          maxVal < minVal
         ) {
           setError(`Invalid limits for ${role.name}.`);
           return;
         }
       }
+    }
 
-      if (roles.mafia.min < 1) {
+    if (assignment === "manual") {
+      if (parsedRoles.mafia.min < 1) {
         setError("At least one Mafia member is required.");
         return;
       }
 
       const minimumTotal = ROLE_CONFIG.reduce(
-        (total, role) => total + roles[role.id].min,
+        (total, role) => total + parsedRoles[role.id].min,
         0
       );
 
       const maximumTotal = ROLE_CONFIG.reduce(
-        (total, role) => total + roles[role.id].max,
+        (total, role) => total + parsedRoles[role.id].max,
         0
       );
 
-      if (minimumTotal > playerCount) {
+      if (minimumTotal > finalPlayerCount) {
         setError("The minimum role counts exceed the player count.");
         return;
       }
 
-      if (maximumTotal < playerCount) {
+      if (maximumTotal < finalPlayerCount) {
         setError("The maximum role counts cannot fill all player slots.");
         return;
       }
     }
 
     onContinue({
-      playerCount,
+      playerCount: finalPlayerCount,
       assignment,
-      roles,
+      roles: assignment === "manual" ? parsedRoles : roles,
       identityMode,
-      playerNames: playerNames.map((name, index) =>
-        name.trim() || `Player ${index + 1}`
+      playerNames: Array.from({ length: finalPlayerCount }, (_, index) =>
+        (playerNames[index] || "").trim() || `Player ${index + 1}`
       )
     });
   };
@@ -210,15 +242,13 @@ function Settings({ onBack, onContinue }) {
                 className="names-toggle"
                 onClick={() => setNamesExpanded((expanded) => !expanded)}
               >
-                <span>Player names ({playerCount})</span>
-                <span>
-                  {namesExpanded ? "▲ Hide" : "▼ Edit names"}
-                </span>
+                <span>Player names ({numericPlayerCount})</span>
+                <span>{namesExpanded ? "▲ Hide" : "▼ Edit names"}</span>
               </button>
 
               {namesExpanded && (
                 <div className="player-name-fields">
-                  {playerNames.map((name, index) => (
+                  {playerNames.slice(0, Math.max(0, numericPlayerCount)).map((name, index) => (
                     <label className="player-name-field" key={index}>
                       <span>Player {index + 1}</span>
 
@@ -278,7 +308,14 @@ function Settings({ onBack, onContinue }) {
 
               {ROLE_CONFIG.map((role) => (
                 <div className="role-limit-row" key={role.id}>
-                  <strong>{role.name}</strong>
+                  <div className="role-limit-label">
+                    <img
+                      src={role.icon}
+                      alt={`${role.name} icon`}
+                      className="role-limit-icon"
+                    />
+                    <strong>{role.name}</strong>
+                  </div>
 
                   <label>
                     Min
@@ -317,16 +354,9 @@ function Settings({ onBack, onContinue }) {
           )}
         </section>
 
-        {error && (
-          <div className="settings-error">
-            {error}
-          </div>
-        )}
+        {error && <div className="settings-error">{error}</div>}
 
-        <button
-          className="settings-continue"
-          onClick={handleContinue}
-        >
+        <button className="settings-continue" onClick={handleContinue}>
           Continue →
         </button>
       </div>
