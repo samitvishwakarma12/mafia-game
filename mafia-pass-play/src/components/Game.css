@@ -1,15 +1,21 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap');
+
 .game-page {
   min-height: 100vh;
   padding-bottom: 40px;
-  /* Dynamic Background: Defaults to dark, but transitions smoothly when daytime classes apply */
-  background: radial-gradient(circle at 50% 0%, #291c3d 0%, #0d0b14 70%);
+  /* NIGHT BACKGROUND: Lighter dark gradient overlay so the moonlit square is clearly visible */
+  background: linear-gradient(rgba(13, 11, 20, 0.45), rgba(13, 11, 20, 0.65)), 
+              url('../assets/background/Civic Square_Night.png') no-repeat center center fixed;
+  background-size: cover;
   color: #f8f5ff;
-  transition: background 0.4s ease;
+  transition: background 0.5s ease;
 }
 
-/* DAYTIME PAGE BACKGROUND OVERRIDE */
+/* DAYTIME PAGE BACKGROUND OVERRIDE: Bright, warm sunlight letting the daytime plaza art shine */
 .game-page.daytime-page-bg {
-  background: radial-gradient(circle at 50% 0%, #fef3c7 0%, #fde68a 50%, #fbbf24 100%) !important;
+  background: linear-gradient(rgba(255, 243, 199, 0.2), rgba(251, 191, 36, 0.25)), 
+              url('../assets/background/Civic Square_ Day.png') no-repeat center center fixed !important;
+  background-size: cover !important;
   color: #1e293b !important;
 }
 
@@ -19,9 +25,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(13, 11, 20, 0.8);
-  backdrop-filter: blur(10px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(13, 11, 20, 0.65);
+  backdrop-filter: blur(12px);
   position: sticky;
   top: 0;
   z-index: 10;
@@ -32,7 +38,7 @@
   font-weight: 800;
   letter-spacing: 1.5px;
   color: #f7bc55;
-  background: rgba(247, 188, 85, 0.1);
+  background: rgba(247, 188, 85, 0.15);
   padding: 6px 12px;
   border-radius: 20px;
 }
@@ -41,7 +47,7 @@
   font-size: 0.75rem;
   font-weight: 800;
   letter-spacing: 1px;
-  color: #a39eb8;
+  color: #d1cbdc;
 }
 
 .game-container {
@@ -49,110 +55,27 @@
   margin: 30px auto 0;
 }
 
-/* Base Party Cards (Nighttime UI) */
+/* Base Party Cards (Nighttime Glassmorphism UI) */
 .handoff-card, .game-over {
-  background: linear-gradient(135deg, rgba(36, 29, 56, 0.9), rgba(21, 17, 33, 0.9));
-  border: 1px solid rgba(247, 188, 85, 0.2);
+  background: rgba(26, 21, 41, 0.82);
+  backdrop-filter: blur(14px);
+  border: 1px solid rgba(247, 188, 85, 0.3);
   border-radius: 20px;
   padding: 30px 22px;
   text-align: center;
-  box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.45);
   animation: partyPop 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
 }
 
-/* VIBRANT SUNNY DAYTIME CARD & BACKGROUND STYLING */
-.daytime-layout {
-  background: #ffffff !important;
-  color: #1e293b !important;
-  border: 2px solid #f59e0b !important;
-  box-shadow: 0 25px 50px rgba(245, 158, 11, 0.25) !important;
-  box-sizing: border-box;
-  max-width: 100%;
-}
-
-.daytime-eyebrow {
-  color: #d97706 !important;
-}
-
-.daytime-heading {
-  color: #0f172a !important;
-  word-break: break-word;
-}
-
-.daytime-desc {
-  color: #475569 !important;
-}
-
-.daytime-elimination {
-  background: #fef2f2 !important;
-  border: 1px solid #fecaca !important;
-  color: #991b1b !important;
-}
-
-.daytime-elimination h2 {
-  color: #dc2626 !important;
-}
-
-.daytime-elimination p {
-  color: #7f1d1d !important;
-}
-
-.daytime-box {
-  background: #f0fdf4 !important;
-  border: 1px solid #bbf7d0 !important;
-  color: #166534 !important;
-}
-
-.daytime-banner {
-  background: #ecfdf5 !important;
-  border: 1px solid #10b981 !important;
-  color: #065f46 !important;
-  padding: 1rem;
-  border-radius: 0.5rem;
-  font-weight: 600;
-  text-align: left;
-}
-
-.daytime-btn {
-  background: #d97706 !important;
-  color: #ffffff !important;
-  box-shadow: 0 4px 15px rgba(217, 119, 6, 0.4) !important;
-  white-space: normal !important;
-  word-break: break-word;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 8px;
-}
-
-.daytime-btn:hover {
-  background: #b45309 !important;
-}
-
-.daytime-timer-box {
-  background: #fef9c3 !important;
-  border: 2px solid #f59e0b !important;
-  color: #78350f !important;
-}
-
-.daytime-sub-btn {
-  background: #fef3c7 !important;
-  color: #78350f !important;
-  border: 1px solid #fcd34d !important;
-}
-
-.daytime-sub-btn:hover {
-  background: #fde68a !important;
-}
-
-/* Serious Action Cards (Sober, Dark, High Contrast for Secret Roles) */
+/* Serious Action Cards (Deep Glassmorphic Midnight UI) */
 .action-card, .private-result {
-  background: #09080d;
-  border: 2px solid rgba(239, 68, 68, 0.3);
+  background: rgba(12, 10, 18, 0.88);
+  backdrop-filter: blur(14px);
+  border: 2px solid rgba(239, 68, 68, 0.35);
   border-radius: 20px;
   padding: 30px 22px;
   text-align: center;
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7);
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.65);
   animation: seriousFadeIn 0.3s ease-out both;
 }
 
@@ -169,18 +92,18 @@
   font-size: 1.8rem;
   font-weight: 700;
   color: #ffffff;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(255, 255, 255, 0.08);
   padding: 12px;
   border-radius: 12px;
   margin: 15px 0;
-  border: 1px dashed rgba(255, 255, 255, 0.15);
+  border: 1px dashed rgba(255, 255, 255, 0.2);
 }
 
 .turn-counter {
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 1px;
-  color: #888297;
+  color: #c0bbcc;
   margin: 15px 0 5px;
 }
 
@@ -189,18 +112,18 @@
   padding: 20px;
   border-radius: 14px;
   margin: 15px 0;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .role-display.mafia {
-  background: rgba(239, 68, 68, 0.08);
-  border-color: rgba(239, 68, 68, 0.3);
+  background: rgba(239, 68, 68, 0.12);
+  border-color: rgba(239, 68, 68, 0.35);
 }
 
 .role-display.town {
-  background: rgba(59, 130, 246, 0.08);
-  border-color: rgba(59, 130, 246, 0.3);
+  background: rgba(59, 130, 246, 0.12);
+  border-color: rgba(59, 130, 246, 0.35);
 }
 
 .role-display-icon {
@@ -218,8 +141,8 @@
 .role-display.town h1 { color: #60a5fa; }
 
 .teammates {
-  background: rgba(239, 68, 68, 0.08);
-  border: 1px solid rgba(239, 68, 68, 0.2);
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.25);
   padding: 12px;
   border-radius: 10px;
   margin-bottom: 15px;
@@ -247,8 +170,8 @@
 .target-option {
   width: 100%;
   padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(255, 255, 255, 0.07);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 10px;
   color: #fff;
   font-weight: 600;
@@ -259,12 +182,12 @@
 }
 
 .target-option:hover {
-  background: rgba(255, 255, 255, 0.1);
-  border-color: rgba(255, 255, 255, 0.25);
+  background: rgba(255, 255, 255, 0.14);
+  border-color: rgba(255, 255, 255, 0.3);
 }
 
 .target-option.selected {
-  background: rgba(247, 188, 85, 0.2);
+  background: rgba(247, 188, 85, 0.25);
   border-color: #f7bc55;
   color: #f7bc55;
 }
@@ -272,14 +195,14 @@
 .target-option.abstain {
   text-align: center;
   font-style: italic;
-  color: #a39eb8;
-  background: rgba(255, 255, 255, 0.02);
+  color: #d1cbdc;
+  background: rgba(255, 255, 255, 0.03);
 }
 
 .target-option.abstain.selected {
-  background: rgba(148, 163, 184, 0.2);
+  background: rgba(148, 163, 184, 0.25);
   border-color: #94a3b8;
-  color: #cbd5e1;
+  color: #e2e8f0;
 }
 
 /* Primary Action Buttons */
@@ -296,7 +219,7 @@
   letter-spacing: 0.5px;
   cursor: pointer;
   margin-top: 15px;
-  box-shadow: 0 4px 15px rgba(247, 188, 85, 0.3);
+  box-shadow: 0 4px 15px rgba(247, 188, 85, 0.35);
   transition: transform 0.15s ease, background 0.15s ease;
   white-space: normal;
   word-break: break-word;
@@ -313,8 +236,8 @@
 
 /* Discussion Timer Box */
 .timer-display-box {
-  background: rgba(15, 23, 42, 0.7);
-  border: 2px solid rgba(247, 188, 85, 0.3);
+  background: rgba(15, 23, 42, 0.65);
+  border: 2px solid rgba(247, 188, 85, 0.35);
   border-radius: 16px;
   padding: 20px;
   margin: 15px 0;
@@ -341,7 +264,7 @@
   font-size: 0.7rem;
   text-transform: uppercase;
   letter-spacing: 1.5px;
-  color: #94a3b8;
+  color: #cbd5e1;
   font-weight: 700;
 }
 
@@ -353,8 +276,8 @@
 }
 
 .timer-toggle-btn, .timer-add-btn {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   color: #fff;
   padding: 8px 14px;
   border-radius: 8px;
@@ -365,13 +288,13 @@
 }
 
 .timer-toggle-btn:hover, .timer-add-btn:hover {
-  background: rgba(255, 255, 255, 0.15);
+  background: rgba(255, 255, 255, 0.2);
 }
 
 /* Error & Notifications */
 .game-error {
-  background: rgba(239, 68, 68, 0.15);
-  border: 1px solid rgba(239, 68, 68, 0.4);
+  background: rgba(239, 68, 68, 0.2);
+  border: 1px solid rgba(239, 68, 68, 0.5);
   color: #fca5a5;
   padding: 10px;
   border-radius: 8px;
@@ -388,8 +311,8 @@
 }
 
 .elimination-item {
-  background: rgba(239, 68, 68, 0.08);
-  border: 1px solid rgba(239, 68, 68, 0.25);
+  background: rgba(239, 68, 68, 0.12);
+  border: 1px solid rgba(239, 68, 68, 0.3);
   padding: 14px;
   border-radius: 12px;
   text-align: left;
@@ -404,16 +327,16 @@
 .elimination-item p {
   margin: 0 0 6px;
   font-size: 0.85rem;
-  color: #c0bbcc;
+  color: #d1cbdc;
 }
 
 .no-elimination {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   padding: 18px;
   border-radius: 12px;
   font-size: 0.9rem;
-  color: #c0bbcc;
+  color: #d1cbdc;
   margin: 15px 0;
 }
 
@@ -437,7 +360,7 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: rgba(255, 255, 255, 0.04);
+  background: rgba(255, 255, 255, 0.06);
   padding: 10px 14px;
   border-radius: 8px;
   font-size: 0.85rem;
@@ -474,35 +397,25 @@
   }
 }
 
-/* DAYTIME VISUAL REFRESH */
 /* =========================================
-   DAYTIME VISUAL REFRESH
+   DAYTIME VISUAL REFRESH (SUNNY SQUARE GLASSMORPHISM)
    Morning, discussion, voting and results
 ========================================= */
 
-.game-page.daytime-page-bg {
-  background: radial-gradient(
-    ellipse at 50% 0%,
-    #fff9e9 0%,
-    #f8edcf 55%,
-    #eee1c1 100%
-  ) !important;
-  color: #292b35 !important;
-}
-
 .game-page.daytime-page-bg .game-navbar {
-  background: rgba(255, 250, 237, 0.92);
-  border-bottom: 1px solid #e8dcc2;
+  background: rgba(255, 250, 237, 0.75);
+  border-bottom: 1px solid rgba(232, 220, 194, 0.6);
   backdrop-filter: blur(12px);
 }
 
 .game-page.daytime-page-bg .game-round {
-  background: #f5e8c9;
+  background: rgba(245, 232, 201, 0.8);
   color: #95631e;
 }
 
 .game-page.daytime-page-bg .game-status {
-  color: #77716a;
+  color: #47423b;
+  font-weight: 800;
 }
 
 .game-container {
@@ -518,12 +431,13 @@
   box-sizing: border-box;
   padding: 34px;
   border-radius: 22px;
-  background: rgba(255, 255, 255, 0.94) !important;
+  background: rgba(255, 255, 255, 0.86) !important;
+  backdrop-filter: blur(14px);
   color: #292b35 !important;
-  border: 1px solid #eadfc9 !important;
-  box-shadow:
-    0 12px 35px rgba(91, 70, 35, 0.09),
-    0 2px 8px rgba(91, 70, 35, 0.04) !important;
+  border: 1px solid rgba(234, 223, 201, 0.8) !important;
+  box-shadow: 
+    0 20px 45px rgba(91, 70, 35, 0.2),
+    0 4px 12px rgba(91, 70, 35, 0.08) !important;
   text-align: left;
   animation: partyPop 0.35s ease-out both;
 }
@@ -545,13 +459,12 @@
   font-size: clamp(1.65rem, 4vw, 2.1rem);
   line-height: 1.2;
   letter-spacing: -0.8px;
-  color: #252a35 !important;
+  color: #1e293b !important;
   margin: 0 0 14px;
-  word-break: normal;
 }
 
 .daytime-desc {
-  color: #77716a !important;
+  color: #47423b !important;
   font-size: 0.95rem;
   line-height: 1.6;
 }
@@ -559,7 +472,7 @@
 .daytime-elimination {
   margin: 24px 0 18px;
   padding: 20px;
-  background: #fff5f3 !important;
+  background: rgba(255, 245, 243, 0.9) !important;
   border: 1px solid #f2d5cf !important;
   border-radius: 15px;
   color: #8f3933 !important;
@@ -582,7 +495,7 @@
   padding: 16px;
   border-radius: 12px;
   margin: 16px 0;
-  background: #f0f7ed !important;
+  background: rgba(240, 247, 237, 0.9) !important;
   border: 1px solid #d7e8d0 !important;
   color: #38613c !important;
 }
@@ -590,7 +503,7 @@
 .daytime-banner {
   padding: 16px;
   border-radius: 12px;
-  background: #f0f7ed !important;
+  background: rgba(240, 247, 237, 0.9) !important;
   border: 1px solid #d7e8d0 !important;
   color: #38613c !important;
   font-weight: 600;
@@ -609,7 +522,7 @@
   font-size: 0.95rem;
   font-weight: 800;
   letter-spacing: 0.2px;
-  box-shadow: 0 4px 12px rgba(166, 107, 36, 0.18) !important;
+  box-shadow: 0 6px 16px rgba(166, 107, 36, 0.3) !important;
   transition: all 0.2s ease;
 }
 
@@ -621,7 +534,7 @@
 .daytime-timer-box {
   padding: 24px;
   border-radius: 16px;
-  background: #fff9e8 !important;
+  background: rgba(255, 249, 232, 0.9) !important;
   border: 1px solid #ead9ae !important;
   color: #76511d !important;
 }
@@ -631,14 +544,14 @@
 }
 
 .daytime-sub-btn {
-  background: #f7eedb !important;
+  background: rgba(247, 238, 219, 0.9) !important;
   color: #76511d !important;
   border: 1px solid #ead9ae !important;
   border-radius: 9px;
 }
 
 .daytime-sub-btn:hover {
-  background: #efe1c1 !important;
+  background: rgba(239, 225, 193, 0.9) !important;
 }
 
 /* Daytime voting handoff */
@@ -647,7 +560,7 @@
 }
 
 .daytime-player {
-  background: #faf5e9 !important;
+  background: rgba(250, 245, 233, 0.9) !important;
   color: #39342d !important;
   border: 1px solid #e9ddc5 !important;
   border-radius: 13px;
@@ -666,7 +579,7 @@
   gap: 13px;
   padding: 17px;
   margin: 22px 0;
-  background: #f8f4e9;
+  background: rgba(248, 244, 233, 0.9);
   border: 1px solid #e9dfca;
   border-radius: 13px;
   color: #514632;
@@ -688,7 +601,7 @@
   margin: 0;
   font-size: 0.82rem;
   line-height: 1.5;
-  color: #807665;
+  color: #5e5444;
 }
 
 /* Daytime player selection */
@@ -704,26 +617,26 @@
   justify-content: space-between;
   width: 100%;
   padding: 15px 17px;
-  background: #faf8f2 !important;
+  background: rgba(250, 248, 242, 0.9) !important;
   border: 1px solid #e8e0d1 !important;
   border-radius: 11px;
-  color: #37352f !important;
+  color: #272522 !important;
   font-size: 0.95rem;
   font-weight: 650;
   transition: all 0.18s ease;
 }
 
 .daytime-target:hover {
-  background: #f5eedf !important;
+  background: rgba(245, 238, 223, 0.95) !important;
   border-color: #d6bd8e !important;
   transform: translateX(2px);
 }
 
 .daytime-target.selected {
-  background: #fff5df !important;
+  background: rgba(255, 245, 223, 0.95) !important;
   border: 1px solid #c18a36 !important;
   color: #875719 !important;
-  box-shadow: 0 2px 8px rgba(166, 107, 36, 0.08);
+  box-shadow: 0 2px 8px rgba(166, 107, 36, 0.15);
 }
 
 .vote-selection-indicator {
@@ -733,7 +646,7 @@
   width: 23px;
   height: 23px;
   border-radius: 50%;
-  background: #eee8db;
+  background: #dcd4c3;
   color: #fff;
   font-size: 0.8rem;
 }
@@ -746,28 +659,65 @@
 .daytime-abstain {
   width: 100%;
   padding: 13px;
-  background: #f4f1e9 !important;
+  background: rgba(244, 241, 233, 0.9) !important;
   border: 1px dashed #d7cbb5 !important;
   border-radius: 11px;
-  color: #777064 !important;
+  color: #5c5448 !important;
   font-size: 0.88rem;
   text-align: center;
 }
 
 .daytime-abstain:hover {
-  background: #eee8dc !important;
+  background: rgba(238, 232, 220, 0.95) !important;
 }
 
 .daytime-abstain.selected {
-  background: #eae5d9 !important;
+  background: rgba(234, 229, 217, 0.95) !important;
   border: 1px solid #a99b7e !important;
-  color: #514632 !important;
+  color: #3f3625 !important;
 }
 
 .game-page.daytime-page-bg .game-error {
-  background: #fff1ef;
+  background: rgba(255, 241, 239, 0.9);
   border: 1px solid #f2c5bd;
   color: #b33b32;
+}
+
+/* Fix Game Over card daytime styling */
+.game-over.daytime-layout {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 34px;
+  border-radius: 22px;
+  background: rgba(255, 255, 255, 0.86) !important;
+  backdrop-filter: blur(14px);
+  color: #292b35 !important;
+  border: 1px solid rgba(234, 223, 201, 0.8) !important;
+  box-shadow:
+    0 20px 45px rgba(91, 70, 35, 0.2),
+    0 4px 12px rgba(91, 70, 35, 0.08) !important;
+  animation: partyPop 0.35s ease-out both;
+}
+
+.game-over.daytime-layout h3 {
+  color: #725322;
+  margin: 18px 0 10px;
+  font-family: 'Space Grotesk', sans-serif;
+}
+
+.game-over.daytime-layout .final-player {
+  background: rgba(250, 245, 233, 0.95);
+  border: 1px solid #e9ddc5;
+  color: #292b35;
+}
+
+.game-over.daytime-layout .status-alive {
+  color: #15803d !important;
+}
+
+.game-over.daytime-layout .status-dead {
+  color: #b91c1c !important;
 }
 
 @media (max-width: 600px) {
@@ -805,13 +755,10 @@
   }
 }
 
-
 /* =========================================
    SMOOTHER PHASE & TOUCH INTERACTIONS
-   Motion only — existing colors and styling stay unchanged
 ========================================= */
 
-/* Each game phase is remounted with its phase key in Game.jsx. */
 .game-phase-screen {
   width: 100%;
   animation: phaseEnter 520ms cubic-bezier(0.22, 1, 0.36, 1) both;
@@ -824,7 +771,6 @@
   to { opacity: 1; transform: translate3d(0, 0, 0) scale(1); }
 }
 
-/* Softer entrances for the existing cards. */
 .handoff-card,
 .game-over,
 .game-layout.daytime-layout,
@@ -839,7 +785,6 @@
   animation-timing-function: cubic-bezier(0.22, 1, 0.36, 1);
 }
 
-/* Smooth state changes without altering the existing palette. */
 .game-page,
 .game-navbar,
 .game-round,
@@ -894,46 +839,9 @@
   animation: contentFadeUp 440ms cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 
-.elimination-item:nth-child(2),
-.final-player:nth-child(2) { animation-delay: 45ms; }
-.elimination-item:nth-child(3),
-.final-player:nth-child(3) { animation-delay: 90ms; }
-.elimination-item:nth-child(4),
-.final-player:nth-child(4) { animation-delay: 135ms; }
-
 @keyframes contentFadeUp {
   from { opacity: 0; transform: translateY(8px); }
   to { opacity: 1; transform: translateY(0); }
-}
-
-@media (hover: hover) and (pointer: fine) {
-  .target-option:hover,
-  .daytime-target:hover,
-  .daytime-abstain:hover,
-  .game-primary:hover,
-  .daytime-btn:hover,
-  .timer-toggle-btn:hover,
-  .timer-add-btn:hover,
-  .daytime-sub-btn:hover {
-    transition-duration: 240ms;
-  }
-}
-
-@media (max-width: 600px) {
-  .game-phase-screen {
-    animation-duration: 460ms;
-  }
-
-  .target-option,
-  .daytime-target,
-  .daytime-abstain,
-  .game-primary,
-  .daytime-btn,
-  .timer-toggle-btn,
-  .timer-add-btn,
-  .daytime-sub-btn {
-    transition-duration: 260ms;
-  }
 }
 
 @media (prefers-reduced-motion: reduce) {
