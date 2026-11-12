@@ -1,5 +1,22 @@
 import ErrorMessage from "./ErrorMessage";
 
+import doctorPersonified from "../../assets/role-icons/doctor-personified.svg";
+import mafiaPersonified from "../../assets/role-icons/mafia-personified.svg";
+import policePersonified from "../../assets/role-icons/police-personified.svg";
+import villagerPersonified from "../../assets/role-icons/villager-personified.svg";
+
+import doctorSymbol from "../../assets/role-icons/doctor-symbol.svg";
+import mafiaSymbol from "../../assets/role-icons/mafia-symbol.svg";
+import policeSymbol from "../../assets/role-icons/police-symbol.svg";
+import villagerSymbol from "../../assets/role-icons/villager-symbol.svg";
+
+const ROLE_ASSETS = {
+  mafia: { personified: mafiaPersonified, symbol: mafiaSymbol },
+  doctor: { personified: doctorPersonified, symbol: doctorSymbol },
+  police: { personified: policePersonified, symbol: policeSymbol },
+  villager: { personified: villagerPersonified, symbol: villagerSymbol }
+};
+
 export default function NightAction({
   player,
   role,
@@ -29,6 +46,8 @@ export default function NightAction({
     setActionAbstained(true);
   };
 
+  const assets = ROLE_ASSETS[role.id] || {};
+
   return (
     <section className="action-card">
       <span className="game-eyebrow">
@@ -37,7 +56,15 @@ export default function NightAction({
 
       <div className={`role-display ${role.team}`}>
         <div className="role-display-icon">
-          {role.icon ?? "❓"}
+          {assets.personified ? (
+            <img
+              src={assets.personified}
+              alt={role.name}
+              className="role-svg-portrait-action"
+            />
+          ) : (
+            role.icon ?? "❓"
+          )}
         </div>
         <span>{role.team.toUpperCase()} ALLIANCE</span>
         <h1>{role.name}</h1>

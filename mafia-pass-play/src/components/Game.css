@@ -127,8 +127,22 @@
 }
 
 .role-display-icon {
-  font-size: 3rem;
-  margin-bottom: 5px;
+  width: 128px;
+  height: 128px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 8px;
+  border-radius: 50%;
+  font-size: 2rem;
+  box-sizing: border-box;
+}
+
+.role-svg-portrait-action {
+  width: 104px;
+  height: 104px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 .role-display h1 {

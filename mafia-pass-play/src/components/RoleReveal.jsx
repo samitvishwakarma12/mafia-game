@@ -1,8 +1,19 @@
-
 import { useState } from "react";
 import "./RoleReveal.css";
 
 import { getRole } from "../game/roles";
+
+import doctorPersonified from "../assets/role-icons/doctor-personified.svg";
+import mafiaPersonified from "../assets/role-icons/mafia-personified.svg";
+import policePersonified from "../assets/role-icons/police-personified.svg";
+import villagerPersonified from "../assets/role-icons/villager-personified.svg";
+
+const ROLE_PORTRAITS = {
+  mafia: mafiaPersonified,
+  doctor: doctorPersonified,
+  police: policePersonified,
+  villager: villagerPersonified
+};
 
 function RoleReveal({ players, onComplete, onBack }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -39,6 +50,8 @@ function RoleReveal({ players, onComplete, onBack }) {
       </main>
     );
   }
+
+  const portraitSrc = ROLE_PORTRAITS[currentPlayer.roleId];
 
   return (
     <main className="reveal-page">
@@ -88,7 +101,15 @@ function RoleReveal({ players, onComplete, onBack }) {
             </span>
 
             <div className={`reveal-role-icon ${currentRole.team}`}>
-              {currentRole.icon ?? "?"}
+              {portraitSrc ? (
+                <img
+                  src={portraitSrc}
+                  alt={currentRole.name}
+                  className="role-svg-portrait-reveal"
+                />
+              ) : (
+                currentRole.icon ?? "?"
+              )}
             </div>
 
             <span className={`reveal-team ${currentRole.team}`}>
